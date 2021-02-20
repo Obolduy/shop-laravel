@@ -4,6 +4,24 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainController::class, 'main']);
 
+Route::get('/login', [LoginController::class, 'login']);
+
+Route::get('/registration', [RegistrationController::class, 'registration']);
+
+Route::get('/logout', [LoginController::class, 'logout']);
+
+Route::get('/reset-password', [PasswordResetController::class, 'resetrequest']);
+
+Route::get('/reset-password/{token}', [PasswordResetController::class, 'reset']);
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    
+    $request->fulfill();
+
+    return redirect('/');
+
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
 Route::get('/catalog/all', [CategoryController::class, 'showall']);
 
 Route::get('/catalog/{id}', [CategoryController::class, 'showcategory']);
@@ -47,3 +65,5 @@ Route::get('/{shop}/delete', [ShopController::class, 'deleteshop']);
 Route::get('/shops/{shop-name}', [ShopController::class, 'showothershop']);
 
 Route::get('/{shop}/catalog', [CategoryController::class, 'showshoplots']);
+
+Route::get('/{shop}', [ShopController::class, 'showshop']);
