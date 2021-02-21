@@ -19,9 +19,9 @@ use App\Http\Controllers\AdminReviewsManageController;
 
 Route::get('/', [MainController::class, 'main']);
 
-Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::match(['get', 'post'], '/login', [LoginController::class, 'login'])->name('login');
 
-Route::get('/registration', [RegistrationController::class, 'registration'])->name('registration');
+Route::match(['get', 'post'], '/registration', [RegistrationController::class, 'registration'])->name('registration');
 
 Route::get('/logout', [LoginController::class, 'logout']);
 
@@ -37,13 +37,13 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 
 Route::get('/catalog/all', [CategoryController::class, 'showall']);
 
-Route::get('/catalog/{category-id}', [CategoryController::class, 'showcategory']);
+Route::get('/catalog/{category_id}', [CategoryController::class, 'showcategory']);
 
-Route::get('/catalog/{category-id}/{subcategory-id}', [CategoryController::class, 'showsubcategory']);
+Route::get('/catalog/{category_id}/{subcategory_id}', [CategoryController::class, 'showsubcategory']);
 
-Route::get('/catalog/{category-id}/{subcategory-id}/{lot-id}', [LotController::class, 'showlot']);
+Route::get('/catalog/{category_id}/{subcategory_id}/{lot_id}', [LotController::class, 'showlot']);
 
-Route::post('/catalog/{category-id}/{subcategory-id}/{lot-id}/add-review/{review-id}', [ReviewController::class, 'addreview']);
+Route::post('/catalog/{category_id}/{subcategory_id}/{lot_id}/add_review/{review_id}', [ReviewController::class, 'addreview']);
 
 Route::get('/cart', [CartController::class, 'showcart']);
 
@@ -63,11 +63,11 @@ Route::get('/profile/change', [UserController::class, 'changeprofile']);
 
 Route::get('/profile/delete', [UserController::class, 'deleteprofile']);
 
-Route::get('/profile/my-shops', [UserController::class, 'showusershops']);
+Route::get('/profile/my_shops', [UserController::class, 'showusershops']);
 
-Route::get('/profile/my-lots', [UserController::class, 'showuserlots']);
+Route::get('/profile/my_lots', [UserController::class, 'showuserlots']);
 
-Route::get('/profile/my-reviews', [UserController::class, 'showuserreviews']);
+Route::get('/profile/my_reviews', [UserController::class, 'showuserreviews']);
 
 Route::get('/create-shop', [ShopController::class, 'createshop']);
 
@@ -75,11 +75,11 @@ Route::get('/{shop}', [ShopController::class, 'showshop']);
 
 Route::get('/{shop}/change', [ShopController::class, 'changeshop']);
 
-Route::get('/{shop}/manage-lots', [ShopController::class, 'manageshoplots']);
+Route::get('/{shop}/manage_lots', [ShopController::class, 'manageshoplots']);
 
 Route::get('/{shop}/delete', [ShopController::class, 'deleteshop']);
 
-Route::get('/shops/{shop-name}', [ShopController::class, 'showothershop']);
+Route::get('/shops/{shop_name}', [ShopController::class, 'showothershop']);
 
 Route::get('/{shop}/catalog', [CategoryController::class, 'showshoplots']);
 
