@@ -37,7 +37,7 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 
 Route::get('/catalog/all', [CategoryController::class, 'showall']);
 
-Route::get('/catalog/{id}', [CategoryController::class, 'showcategory']);
+Route::get('/catalog/{category-id}', [CategoryController::class, 'showcategory']);
 
 Route::get('/catalog/{category-id}/{subcategory-id}', [CategoryController::class, 'showsubcategory']);
 
@@ -55,7 +55,7 @@ Route::get('/cart/buy', [CartController::class, 'buy']);
 
 Route::get('/cart/buy/payment', [CartController::class, 'payform']);
 
-Route::get('/cart/buy/payment/success', [CartController::class, 'showcart']);
+Route::get('/cart/buy/payment/success', [CartController::class, 'paymentsuccess']);
 
 Route::get('/profile', [UserController::class, 'showprofile']);
 
@@ -82,8 +82,6 @@ Route::get('/{shop}/delete', [ShopController::class, 'deleteshop']);
 Route::get('/shops/{shop-name}', [ShopController::class, 'showothershop']);
 
 Route::get('/{shop}/catalog', [CategoryController::class, 'showshoplots']);
-
-Route::get('/{shop}', [ShopController::class, 'showshop']);
 
 Route::get('/admin', function () {
     return view('adminmain');
