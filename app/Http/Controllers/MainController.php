@@ -13,4 +13,9 @@ class MainController extends Controller
         // Количество новых (штучек 5) и название
         return view('main'/*, ['newlots' => $newlots]*/);
     }
+
+    public function test()
+    {
+        return view('test', ['data' => $data]);
+    }
 }

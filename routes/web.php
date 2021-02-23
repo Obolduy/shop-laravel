@@ -17,6 +17,8 @@ use App\Http\Controllers\AdminShopsManageController;
 use App\Http\Controllers\AdminLotsManageController;
 use App\Http\Controllers\AdminReviewsManageController;
 
+Route::get('/test', [MainController::class, 'test']);
+
 Route::get('/', [MainController::class, 'main']);
 
 Route::match(['get', 'post'], '/login', [LoginController::class, 'login'])->name('login');
@@ -47,11 +49,9 @@ Route::post('/catalog/{category_id}/{subcategory_id}/{lot_id}/add_review/{review
 
 Route::get('/cart', [CartController::class, 'showcart']);
 
-Route::get('/cart/add', [CartController::class, 'addtocart']);
+Route::get('/cart/add/{lot_id}', [CartController::class, 'addtocart']);
 
-Route::get('/cart/delete', [CartController::class, 'deletefromcart']);
-
-Route::get('/cart/buy', [CartController::class, 'buy']);
+Route::get('/cart/delete/{lot_id}', [CartController::class, 'deletefromcart']);
 
 Route::get('/cart/buy/payment', [CartController::class, 'payform']);
 
@@ -63,9 +63,7 @@ Route::get('/profile/change', [UserController::class, 'changeprofile']);
 
 Route::get('/profile/delete', [UserController::class, 'deleteprofile']);
 
-Route::get('/profile/my_shops', [UserController::class, 'showusershops']);
-
-Route::get('/profile/my_lots', [UserController::class, 'showuserlots']);
+Route::get('/profile/my_shop', [UserController::class, 'showusershop']);
 
 Route::get('/profile/my_reviews', [UserController::class, 'showuserreviews']);
 
@@ -76,6 +74,8 @@ Route::get('/{shop}', [ShopController::class, 'showshop']);
 Route::get('/{shop}/change', [ShopController::class, 'changeshop']);
 
 Route::get('/{shop}/manage_lots', [ShopController::class, 'manageshoplots']);
+
+Route::get('/{shop}/manage_lots/{lot_id}', [LotController::class, 'editlot']);
 
 Route::get('/{shop}/delete', [ShopController::class, 'deleteshop']);
 
