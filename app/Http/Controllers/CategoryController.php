@@ -21,9 +21,10 @@ class CategoryController extends Controller
         return view('showsubcategory', ['subcategory' => $subcategory]);
     }
 
-    public function showsubcategory($subcategory_id)
+    public function showsubcategory($category_id, $subcategory_id)
     {
-        $lots = DB::select('select id, lot_name, subcategory_id, category_id from lots where subcategory_id = ?', [$subcategory_id]);
+        $lots = DB::select('select id, lot_name, subcategory_id, category_id from lots where category_id = ? and subcategory_id = ?',
+        [$category_id, $subcategory_id]);
         
         return view('showsubcategorylots', ['lots' => $lots]);
 

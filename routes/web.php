@@ -37,13 +37,13 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     return redirect('/');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
-Route::get('/catalog/all', [CategoryController::class, 'showall']);
+Route::get('/catalog/all', [CategoryController::class, 'showall']);//
 
-Route::get('/catalog/{category_id}', [CategoryController::class, 'showcategory']);
+Route::get('/catalog/{category_id}', [CategoryController::class, 'showcategory']);//
 
-Route::get('/catalog/{category_id}/{subcategory_id}', [CategoryController::class, 'showsubcategory']);
+Route::get('/catalog/{category_id}/{subcategory_id}', [CategoryController::class, 'showsubcategory']);//
 
-Route::get('/catalog/{category_id}/{subcategory_id}/{lot_id}', [LotController::class, 'showlot']);
+Route::get('/catalog/{category_id}/{subcategory_id}/{lot_id}', [LotController::class, 'showlot']); // чуть покрасивше сделать
 
 Route::match(['get', 'post'], '/catalog/{category_id}/{subcategory_id}/{lot_id}/add_review/{review_id}', [ReviewController::class, 'addreview']);
 
@@ -69,19 +69,19 @@ Route::get('/profile/my_reviews', [UserController::class, 'showuserreviews']);
 
 Route::match(['get', 'post'], '/create-shop', [ShopController::class, 'createshop']);
 
-Route::get('/{shop}', [ShopController::class, 'showshop']);
+Route::get('/myshop/{shop}', [ShopController::class, 'showshop']);
 
-Route::match(['get', 'post'], '/{shop}/change', [ShopController::class, 'changeshop']);
+Route::match(['get', 'post'], '/myshop/{shop}/change', [ShopController::class, 'changeshop']);
 
-Route::match(['get', 'post'], '/{shop}/manage_lots', [ShopController::class, 'manageshoplots']);
+Route::match(['get', 'post'], '/myshop/{shop}/manage_lots', [ShopController::class, 'manageshoplots']);
 
-Route::match(['get', 'post'], '/{shop}/manage_lots/{lot_id}', [LotController::class, 'editlot']);
+Route::match(['get', 'post'], '/myshop/{shop}/manage_lots/{lot_id}', [LotController::class, 'editlot']);
 
-Route::match(['get', 'post'], '/{shop}/delete', [ShopController::class, 'deleteshop']);
+Route::match(['get', 'post'], '/myshop/{shop}/delete', [ShopController::class, 'deleteshop']);
 
 Route::get('/shops/{shop_name}', [ShopController::class, 'showothershop']);
 
-Route::get('/{shop}/catalog', [CategoryController::class, 'showshoplots']);
+Route::get('/myshop/{shop}/catalog', [CategoryController::class, 'showshoplots']);
 
 Route::get('/admin', function () {
     return view('adminmain');

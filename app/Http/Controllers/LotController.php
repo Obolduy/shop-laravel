@@ -10,7 +10,7 @@ class LotController extends Controller
 {
     public function showlot($lot_id)
     {
-        $lot = DB::select('select * from lots where id = ?', [$lot_id])->get();
+        $lot = DB::select('select * from lots where id = ?', [$lot_id]);
 
         return view('showlot', ['lot' => $lot]);
     }
