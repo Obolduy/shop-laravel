@@ -30,14 +30,14 @@ class AdminUsersManageController extends Controller
             return view('changeuser', ['user' => $user]);
         }
 
-        DB::update("update names set name = ?, user_login = ? where user_id = ?", [$request->name, $request->login, $id]);
-        DB::update("update surnames set surname = ?, user_login = ? where user_id = ?", [$request->surname, $request->login, $id]);
-        DB::update("update countries set country = ?, user_login = ? where user_id = ?", [$request->country, $request->login, $id]);
-        DB::update("update states set state = ?, user_login = ? where user_id = ?", [$request->state, $request->login, $id]);
-        DB::update("update cities set city = ?, user_login = ? where user_id = ?", [$request->city, $request->login, $id]);
-        DB::update("update districts set district = ?, user_login = ? where user_id = ?", [$request->district, $request->login, $id]);
-        DB::update("update streets set street = ?, user_login = ? where user_id = ?", [$request->street, $request->login, $id]);
-        DB::update("update houses set house = ?, user_login = ? where user_id = ?", [$request->house, $request->login, $id]);
+        DB::update("update names set name = ? where user_id = ?", [$request->name, $id]);
+        DB::update("update surnames set surname = ? where user_id = ?", [$request->surname, $id]);
+        DB::update("update countries set country = ? where user_id = ?", [$request->country, $id]);
+        DB::update("update states set state = ? where user_id = ?", [$request->state, $id]);
+        DB::update("update cities set city = ? where user_id = ?", [$request->city, $id]);
+        DB::update("update districts set district = ? where user_id = ?", [$request->district, $id]);
+        DB::update("update streets set street = ? where user_id = ?", [$request->street, $id]);
+        DB::update("update houses set house = ? where user_id = ?", [$request->house, $id]);
         DB::update("update users set login = ?, email = ? where id = ?", [$request->login, $request->email, $id]);
 
         return redirect();

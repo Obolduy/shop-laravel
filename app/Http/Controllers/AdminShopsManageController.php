@@ -12,14 +12,14 @@ class AdminShopsManageController extends Controller
         $shop = DB::table('shops')
                 ->join('users', 'users.id', '=', 'shops.user_id')
                 ->join('lots', 'shops.id', '=', 'lots.shop_id')
-                ->select('lots.name', 'lots.id', 'users.login', 'shops.id', 'shops.name')
+                ->select('lots.lot_name', 'lots.id', 'users.login', 'shops.id', 'shops.shop_name')
                 ->where('shops.id', '=', $id)->get();
         
         if ($request->isMethod('get')) {
             return view('changeshop', ['shop' => $shop]);
         }
 
-        DB::update('update shops set name = ? where id = ?',
+        DB::update('update shops set shop_name = ? where id = ?',
             [$request->name, $id]); //
 
         return redirect();

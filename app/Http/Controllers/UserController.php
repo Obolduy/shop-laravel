@@ -145,7 +145,7 @@ class UserController extends Controller
     {
         $shop = DB::table('shops')
                 ->join('lots', 'lots.shop_id', '=', 'shops.id')
-                ->select('shops.name', 'lots.name', 'lots.price', 'lots.id', 'lots.count')
+                ->select('shops.shop_name', 'lots.lot_name', 'lots.price', 'lots.id', 'lots.count')
                 ->where('shops.user_id', '=', 'users.id');
         
         return view('showusershop', ['shop' => $shop]);
@@ -155,7 +155,7 @@ class UserController extends Controller
     {
         $shop = DB::table('reviews')
                 ->join('lots', 'reviews.lot_id', '=', 'lots.id')
-                ->select('lots.name', 'review.title', 'review.text', 'lots.id', 'review.created_at')
+                ->select('lots.lot_name', 'review.title', 'review.text', 'lots.id', 'review.created_at')
                 ->where('reviews.user_id', '=', 'users.id');
         
         return view('showusershop', ['shop' => $shop]);

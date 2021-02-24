@@ -13,9 +13,7 @@ class RegistrationController extends Controller
     public function registration(Request $request)
     {
         if ($request->isMethod('get')) {
-            //$countries = DB::select('select * from countries');
-
-            return view('registration', ['countries' => $countries]);
+            return view('registration');
         }
 
         $validated = $request->validate([

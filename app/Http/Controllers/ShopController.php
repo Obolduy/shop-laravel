@@ -14,7 +14,7 @@ class ShopController extends Controller
             return view('createshop');
         }
 
-        DB::insert('insert into shops (name, user_id, creation_time) values (?, ?, ?)',
+        DB::insert('insert into shops (shop_name, user_id, creation_time) values (?, ?, ?)',
             [htmlspecialchars($request->title), Auth::id(), now()]); //
 
         return redirect();
@@ -22,7 +22,7 @@ class ShopController extends Controller
 
     public function showshop()
     {
-        $lots = DB::select('select id, name, price, count from lots where user_id = ?', [Auth::id()])->get();
+        $lots = DB::select('select id, lot_name, price, count from lots where user_id = ?', [Auth::id()])->get();
 
         return view('showshop', ['lots' => $lots]);
     }
@@ -33,7 +33,7 @@ class ShopController extends Controller
             return view('changeshop');
         }
 
-        DB::update('update shops set name = ? where user_id = ?', [htmlspecialchars($request->title), Auth::id()]); /////
+        DB::update('update shops set shop_name = ? where user_id = ?', [htmlspecialchars($request->title), Auth::id()]); /////
 
         return redirect();
     }
@@ -42,7 +42,7 @@ class ShopController extends Controller
     {
         $lots = DB::table('shops')
                 ->join('lots', 'shops.id', '=', 'lots.shop_id')
-                ->select('lots.id', 'lots.name', 'lots.count', 'lots.price')
+                ->select('lots.id', 'lots.lot_name', 'lots.count', 'lots.price')
                 ->where('shops.user_id', '=', Auth::id())->get();
 
         return view('changeshop', ['lots' => $lots]);
@@ -61,7 +61,7 @@ class ShopController extends Controller
 
     public function showothershop($shop_name)
     {
-        $lots = DB::select('select id, name, price, count from lots where name = ?', [$shop_name])->get();
+        $lots = DB::select('select id, lot_name, price, count from lots where name = ?', [$shop_name])->get();
 
         return view('showothershop', ['lots' => $lots]);
     }

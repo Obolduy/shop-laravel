@@ -13,7 +13,7 @@ class AdminReviewsManageController extends Controller
                 ->join('shops', 'shops.id', '=', 'lots.shop_id')
                 ->join('users', 'users.id', '=', 'reviews.user_id')
                 ->join('lots', 'lots.id', '=', 'reviews.lot_id')
-                ->select('lots.name', 'lots.id', 'users.login', 'shops.name', 'reviews.title', 'reviews.text')
+                ->select('lots.lot_name', 'lots.id', 'users.login', 'shops.shop_name', 'reviews.title', 'reviews.text')
                 ->where('reviews.id', '=', $id)->get();
         
         if ($request->isMethod('get')) {

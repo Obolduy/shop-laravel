@@ -10,21 +10,21 @@ class LotController extends Controller
 {
     public function showlot($lot_id)
     {
-        // $lot = DB::select('select * from lots where id = ?', [$lot_id]);
-        // Подрихтовать запрос и нормально передать в представление
-        return view('showlot'/*, ['lot' => $lot]*/);
+        $lot = DB::select('select * from lots where id = ?', [$lot_id])->get();
+
+        return view('showlot', ['lot' => $lot]);
     }
 
     public function editlot($lot_id, Request $request)
     {
         if ($request->isMethod('get')) {
-            $lot = DB::select('select name, count, description, price from lots where id = ?', [$lot_id]);
+            $lot = DB::select('select lot_name, count, description, price from lots where id = ?', [$lot_id]);
 
             return view('editlot', ['lot' => $lot]);
         }
 
         if (Auth::attempt(['password' => $password])) {
-            DB::update('update lots set name = ?, count = ?, description = ?, price = ? where id = ?',
+            DB::update('update lots set lot_name = ?, count = ?, description = ?, price = ? where id = ?',
                 [$request->name, $request->count, $request->description, $request->price, $lot_id]);
 
             return redirect();

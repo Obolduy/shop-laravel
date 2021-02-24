@@ -9,28 +9,30 @@ class CategoryController extends Controller
 {
     public function showall()
     {
-        $categories = DB::select('select id, category from categories');
+        $categories = DB::select('select id, category from categories')->get();
         
         return view('showallcategories', ['categories' => $categories]);
     }
 
     public function showcategory($category_id)
     {
-        $subcategory = DB::select('select id, subcategory from subcategories = ?', [$category_id]);
+        $subcategory = DB::select('select id, subcategory from subcategories = ?', [$category_id])->get();
         
         return view('showsubcategory', ['subcategory' => $subcategory]);
     }
 
     public function showsubcategory($subcategory_id)
     {
-        $lots = DB::select('select id, lot_name from lots where subcategory_id = ?', [$subcategory_id]);
+        $lots = DB::select('select id, lot_name from lots where subcategory_id = ?', [$subcategory_id])->get();
         
         return view('showsubcategorylots', ['lots' => $lots]);
     }
 
     public function showshoplots($shop)
     {
-        $lots = DB::select('select id, lot_name from lots where shop_name = ?', [$shop]);
+        $shop_id = DB::select('select id from shops where shop_name = ?', [$shop]);
+
+        $lots = DB::select('select id, lot_name from lots where shop_id = ?', [$shop_id])->get();
         
         return view('showshoplots', ['lots' => $lots]);
     }
