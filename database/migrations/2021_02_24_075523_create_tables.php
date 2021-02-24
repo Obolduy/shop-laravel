@@ -55,31 +55,37 @@ class CreateTables extends Migration
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
             $table->string('country');
+            $table->integer('user_id');
         });
 
         Schema::create('states', function (Blueprint $table) {
             $table->id();
             $table->string('state');
+            $table->integer('user_id');
         });
 
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
             $table->string('city');
+            $table->integer('user_id');
         });
 
         Schema::create('districts', function (Blueprint $table) {
             $table->id();
             $table->string('district');
+            $table->integer('user_id');
         });
 
         Schema::create('streets', function (Blueprint $table) {
             $table->id();
             $table->string('street');
+            $table->integer('user_id');
         });
 
         Schema::create('houses', function (Blueprint $table) {
             $table->id();
             $table->string('house');
+            $table->integer('user_id');
         });
 
         Schema::create('shops', function (Blueprint $table) {
