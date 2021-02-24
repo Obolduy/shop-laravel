@@ -88,14 +88,14 @@ class UserController extends Controller
 
         if (password_verify($request->password, Auth::user()->password)) {
 
-            DB::update("update names set name = ?, user_login = ? where user_id = ?", [$request->name, $request->login, Auth::id()]);
-            DB::update("update surnames set surname = ?, user_login = ? where user_id = ?", [$request->surname, $request->login, Auth::id()]);
-            DB::update("update countries set country = ?, user_login = ? where user_id = ?", [$request->country, $request->login, Auth::id()]);
-            DB::update("update states set state = ?, user_login = ? where user_id = ?", [$request->state, $request->login, Auth::id()]);
-            DB::update("update cities set city = ?, user_login = ? where user_id = ?", [$request->city, $request->login, Auth::id()]);
-            DB::update("update districts set district = ?, user_login = ? where user_id = ?", [$request->district, $request->login, Auth::id()]);
-            DB::update("update streets set street = ?, user_login = ? where user_id = ?", [$request->street, $request->login, Auth::id()]);
-            DB::update("update houses set house = ?, user_login = ? where user_id = ?", [$request->house, $request->login, Auth::id()]);
+            DB::update("update names set name = ? where user_id = ?", [$request->name, Auth::id()]);
+            DB::update("update surnames set surname = ? where user_id = ?", [$request->surname, Auth::id()]);
+            DB::update("update countries set country = ? where user_id = ?", [$request->country, Auth::id()]);
+            DB::update("update states set state = ? where user_id = ?", [$request->state, Auth::id()]);
+            DB::update("update cities set city = ? where user_id = ?", [$request->city, Auth::id()]);
+            DB::update("update districts set district = ? where user_id = ?", [$request->district, Auth::id()]);
+            DB::update("update streets set street = ? where user_id = ?", [$request->street, Auth::id()]);
+            DB::update("update houses set house = ? where user_id = ?", [$request->house, Auth::id()]);
 
             if (!empty($request->new_password)) {
                 $password = Hash::make($request->new_password);

@@ -20,7 +20,7 @@ class RegistrationController extends Controller
 
         $validated = $request->validate([
             'login' => 'required|between:4,32|unique:users,login|alpha_dash',
-            'password' => 'required|between:4,32|alpha_dash|different:login',
+            'password' => 'required|between:6,32|alpha_dash|different:login',
             'confirmPassword' => 'required|same:password',
             'email' => 'required|unique:users,email|different:login, password',
             'name' => 'required|max:32|alpha',
