@@ -43,11 +43,11 @@ Route::get('/catalog/{category_id}', [CategoryController::class, 'showcategory']
 
 Route::get('/catalog/{category_id}/{subcategory_id}', [CategoryController::class, 'showsubcategory']);//
 
-Route::get('/catalog/{category_id}/{subcategory_id}/{lot_id}', [LotController::class, 'showlot']); // чуть покрасивше сделать
+Route::get('/catalog/{category_id}/{subcategory_id}/{lot_id}', [LotController::class, 'showlot']);//
 
-Route::match(['get', 'post'], '/catalog/{category_id}/{subcategory_id}/{lot_id}/add_review/{review_id}', [ReviewController::class, 'addreview']);
+Route::match(['get', 'post'], '/add_review/{lot_id}', [ReviewController::class, 'addreview']);//
 
-Route::get('/cart', [CartController::class, 'showcart']);
+Route::get('/cart', [CartController::class, 'showcart']);// ++
 
 Route::match(['get', 'post'], '/cart/add/{lot_id}', [CartController::class, 'addtocart']);
 

@@ -1,17 +1,22 @@
 @section('main_section')
 @foreach($lot as $elem)
-<p>{{$elem->lot_name}}</p>
+<p><b>{{$elem->lot_name}}</b></p>
 <p>{{$elem->lot_description}}</p>
 <p>{{$elem->price}}</p>
 <p>{{$elem->count}}</p>
-<p>{{$elem->created_at}}</p><br>
+<p><i>{{$elem->created_at}}</i></p><br>
+<form method="POST" action="/add_review/{{lot_id}}">
+    @csrf
+    <p>Название отзыва:<input type="text" name="title"></p>
+    <p><textarea name="text"></textarea></p>
+    <p><input type="submit" name="submit"></p>
+</form>
 @endforeach
-<p>Тут место для комментариев:</p>
 @foreach($reviews as $review)
-<p>{{$elem->title}}</p>
-<p>{{$elem->text}}</p>
-<p>{{$elem->created_at}}</p>
-<p>{{$elem->login}}</p>
+<p><b>{{$review->title}}</b></p>
+<p><b><i>{{$review->login}}</b></i></p>
+<p>{{$review->text}}</p>
+<p><i>{{$review->created_at}}</i></p>
 @endforeach
 @endsection
 @include('layout')
