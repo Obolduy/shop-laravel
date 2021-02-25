@@ -83,6 +83,9 @@ class UserController extends Controller
             ],
             'house' => [
                 'required'
+            ],
+            'new_password' => [
+                'different:login,password', 'between:6,32', 'alpha_dash'
             ]
         ]);
 
@@ -103,11 +106,11 @@ class UserController extends Controller
                 DB::update("update users set password = ? where id = ?", [$password, Auth::id()]);
             }
 
-            if ($request->hasFile('photo')) {
+          //  if ($request->hasFile('photo')) {
                //
-            } else {
+           // } else {
                 DB::update("update users set login = ?, email = ? where id = ?", [$request->login, $request->email, Auth::id()]);
-            }
+           // }
 
             return redirect("/profile");
         }
@@ -116,6 +119,10 @@ class UserController extends Controller
 
     public function deleteprofile(Request $request)
     {
+        if ($request->isMethod('get')) {
+            return view('deleteprofile');
+        }
+
         if (Auth::attempt(['password' => $request->password])) {
             if (Auth::user()->photo) {
                 Storage::delete('public/imagestorage/avatars/'.Auth::user()->photo);

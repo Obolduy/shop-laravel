@@ -4,8 +4,9 @@
 <p>{{$elem->lot_description}}</p>
 <p>{{$elem->price}}</p>
 <p>{{$elem->count}}</p>
-<p><i>{{$elem->created_at}}</i></p><br>
-<form method="POST" action="/add_review/{{lot_id}}">
+<p><i>{{$elem->created_at}}</i></p>
+<p><a href="/cart/add/{{$elem->id}}">Добавить в корзину</a></p><br>
+<form method="POST" action="/add_review/{{$elem->lot_id}}">
     @csrf
     <p>Название отзыва:<input type="text" name="title"></p>
     <p><textarea name="text"></textarea></p>

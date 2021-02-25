@@ -19,7 +19,7 @@ class CartController extends Controller
         } else {
             $lots = DB::table("cart_$user_id")
                     ->join('lots', 'lots.id', '=', "cart_$user_id.lot_id")
-                    ->select("cart_$user_id.*", 'lots.lot_name');
+                    ->select("cart_$user_id.*", 'lots.id', 'lots.lot_name', 'lots.category_id', 'lots.subcategory_id');
 
             return view('showcart', ['lots' => $lots]);
         }
@@ -68,10 +68,11 @@ class CartController extends Controller
             'dictrict' => 'required',
             'street' => 'required',
             'house' => 'required',
-            'street' => 'required',
             'credit_card' => 'required|min:15|max:19|integer',
             'code' => 'required|digit:3',
-            'full_name' => 'required',
+            'name' => 'required|alpha',
+            'surname' => 'required|alpha',
+            'month' => 'required|digit:2',
             'year' => 'required|digit:4'
         ]);
 

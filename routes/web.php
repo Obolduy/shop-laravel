@@ -47,21 +47,21 @@ Route::get('/catalog/{category_id}/{subcategory_id}/{lot_id}', [LotController::c
 
 Route::match(['get', 'post'], '/add_review/{lot_id}', [ReviewController::class, 'addreview']);//
 
-Route::get('/cart', [CartController::class, 'showcart']);// ++
+Route::get('/cart', [CartController::class, 'showcart']);// аттэншн
 
-Route::match(['get', 'post'], '/cart/add/{lot_id}', [CartController::class, 'addtocart']);
+Route::post('/cart/add/{lot_id}', [CartController::class, 'addtocart']);//
 
-Route::match(['get', 'post'], '/cart/delete/{lot_id}', [CartController::class, 'deletefromcart']);
+Route::post('/cart/delete/{lot_id}', [CartController::class, 'deletefromcart']);//
 
-Route::match(['get', 'post'], '/cart/buy/payment', [CartController::class, 'payform']);
+Route::match(['get', 'post'], '/cart/buy/payment', [CartController::class, 'payform']);// автозаполнение некоторых
 
-Route::get('/cart/buy/payment/success', [CartController::class, 'paymentsuccess']);
+Route::get('/cart/buy/payment/success', [CartController::class, 'paymentsuccess']);// В приемлимый вид
 
-Route::get('/profile', [UserController::class, 'showprofile']);
+Route::get('/profile', [UserController::class, 'showprofile']);// Аналогично + аватар
 
-Route::match(['get', 'post'], '/profile/change', [UserController::class, 'changeprofile']);
+Route::match(['get', 'post'], '/profile/change', [UserController::class, 'changeprofile']);// аватар и ко
 
-Route::match(['get', 'post'], '/profile/delete', [UserController::class, 'deleteprofile']);
+Route::match(['get', 'post'], '/profile/delete', [UserController::class, 'deleteprofile']);//
 
 Route::get('/profile/my_shop', [UserController::class, 'showusershop']);
 
