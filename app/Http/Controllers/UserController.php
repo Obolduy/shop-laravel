@@ -152,19 +152,25 @@ class UserController extends Controller
     {
         $shop = DB::table('shops')
                 ->join('lots', 'lots.shop_id', '=', 'shops.id')
-                ->select('shops.shop_name', 'lots.lot_name', 'lots.price', 'lots.id', 'lots.count')
+                ->select('shops.shop_name', 'lots.lot_name', 'lots.price', 
+                    'lots.id', 'lots.subcategory_id', 'lots.category_id', 'lots.count')
                 ->where('shops.user_id', '=', 'users.id');
         
-        return view('showusershop', ['shop' => $shop]);
+        foreach($shop as $elem) {
+            $shop_name = $elem->shop_name;
+        }
+        
+        return view('showusershop', ['shop' => $shop, 'shop_name' => $shop_name]);
     }
 
     public function showuserreviews()
     {
-        $shop = DB::table('reviews')
+        $reviews = DB::table('reviews')
                 ->join('lots', 'reviews.lot_id', '=', 'lots.id')
-                ->select('lots.lot_name', 'review.title', 'review.text', 'lots.id', 'review.created_at')
+                ->select('lots.lot_name', 'review.title', 'review.text',
+                    'lots.subcategory_id', 'lots.category_id', 'lots.id', 'review.created_at')
                 ->where('reviews.user_id', '=', 'users.id');
         
-        return view('showusershop', ['shop' => $shop]);
+        return view('showuserreviews', ['reviews' => $reviews]);
     }
 }

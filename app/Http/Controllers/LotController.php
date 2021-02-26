@@ -22,14 +22,19 @@ class LotController extends Controller
     public function editlot($lot_id, Request $request)
     {
         if ($request->isMethod('get')) {
-            $lot = DB::select('select lot_name, count, description, price from lots where id = ?', [$lot_id]);
+            $lot = DB::select('select lot_name, count, lot_description, price from lots where id = ?', [$lot_id]);
 
             return view('editlot', ['lot' => $lot]);
         }
 
         if (Auth::attempt(['password' => $password])) {
-            DB::update('update lots set lot_name = ?, count = ?, description = ?, price = ? where id = ?',
-                [$request->name, $request->count, $request->description, $request->price, $lot_id]);
+            if ($request->delete == 1) {
+                DB::delete('delete lots where id = ?', [$lot_id]);
+            }
+
+            DB::update('update lots set lot_name = ?, count = ?, lot_description = ?, price = ? where id = ?',
+                [htmlspecialchars($request->name), htmlspecialchars($request->count),
+                htmlspecialchars($request->description), htmlspecialchars($request->price), htmlspecialchars($lot_id)]);
 
             return redirect();
         }
