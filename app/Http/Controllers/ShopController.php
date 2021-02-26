@@ -14,42 +14,42 @@ class ShopController extends Controller
             return view('createshop');
         }
 
-        DB::insert('insert into shops (shop_name, user_id, creation_time) values (?, ?, ?)',
-            [htmlspecialchars($request->title), Auth::id(), now()]); //
+        Validator::make($request->all(), [
+            'shop_name' => [
+                'required', Rule::unique('shops')->ignore($shop),
+                'between:4,32', 'alpha_dash'
+            ],
+            'shop_description' => [
+                'required'
+            ]
+        ]);
+
+        DB::insert('insert into shops (shop_name, shop_description, user_id, created_at, updated_at) values (?, ?, ?, ?, ?)',
+            [htmlspecialchars($request->shop_name), htmlspecialchars($request->shop_description), Auth::id(), now(), now()]);
 
         return redirect();
     }
 
-    public function showshop()
-    {
-        $lots = DB::select('select id, lot_name, price, count from lots where user_id = ?', [Auth::id()])->get();
-
-        return view('showshop', ['lots' => $lots]);
-    }
-
-    public function changeshop(Request $request)
+    public function changeshop($shop, Request $request)
     {
         if ($request->isMethod('get')) {
-            return view('changeshop');
+            $shop = DB::select('select shop_name, shop_description from shops where user_id = ?', [Auth::id()]);
+
+            return view('changeshop', ['shop' => $shop]);
         }
 
-        DB::update('update shops set shop_name = ? where user_id = ?', [htmlspecialchars($request->title), Auth::id()]); /////
+        DB::update('update shops set shop_name = ?, shop_description = ?, updated_at = ? where user_id = ?',
+            [htmlspecialchars($request->shop_name), htmlspecialchars($request->shop_description), now(), Auth::id()]); /////
 
         return redirect();
-    }
-
-    public function manageshoplots()
-    {
-        $lots = DB::table('shops')
-                ->join('lots', 'shops.id', '=', 'lots.shop_id')
-                ->select('lots.id', 'lots.lot_name', 'lots.count', 'lots.price')
-                ->where('shops.user_id', '=', Auth::id())->get();
-
-        return view('changeshop', ['lots' => $lots]);
     }
 
     public function deleteshop($shop, Request $request)
     {
+        if ($request->isMethod('get')) {
+            return view('deleteshop');
+        }
+
         if (Auth::attempt(['password' => $password])) {
             $shop = DB::select('select * from shops where user_id = ?', [Auth::id()])->get();
             DB::delete('delete lots where shop_id = ?', [$shop]);

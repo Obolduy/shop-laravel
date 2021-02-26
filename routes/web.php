@@ -67,13 +67,9 @@ Route::get('/profile/my_shop', [UserController::class, 'showusershop']);//
 
 Route::get('/profile/my_reviews', [UserController::class, 'showuserreviews']);//
 
-Route::match(['get', 'post'], '/create-shop', [ShopController::class, 'createshop']);
+Route::match(['get', 'post'], '/create-shop', [ShopController::class, 'createshop']);//
 
-Route::get('/myshop/{shop}', [ShopController::class, 'showshop']);
-
-Route::match(['get', 'post'], '/myshop/{shop}/change', [ShopController::class, 'changeshop']);
-
-Route::match(['get', 'post'], '/myshop/{shop}/manage_lots', [ShopController::class, 'manageshoplots']);
+Route::match(['get', 'post'], '/myshop/{shop}/change', [ShopController::class, 'changeshop']);//
 
 Route::match(['get', 'post'], '/myshop/{shop}/manage_lots/{lot_id}', [LotController::class, 'editlot']);//
 
