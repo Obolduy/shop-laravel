@@ -4,7 +4,7 @@
     <th>Цена лота</th>
     <th>Количество</th>
    </tr>
-   @foreach($shop as $elem)
+   @foreach($lots as $elem)
    <tr>
     <td><a href="/catalog/{{$elem->category_id}}/{{$elem->subcategory_id}}/{{$elem->id}}">{{$elem->lot_name}}</a></td>
     <td>{{$elem->price}}</td>
@@ -12,4 +12,3 @@
    </tr>
   @endforeach
 </table>
-<p><a href="/myshop/{{$shop_name}}/change">Изменить</a></p>

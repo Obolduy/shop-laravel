@@ -73,25 +73,23 @@ Route::match(['get', 'post'], '/myshop/{shop}/change', [ShopController::class, '
 
 Route::match(['get', 'post'], '/myshop/{shop}/manage_lots/{lot_id}', [LotController::class, 'editlot']);//
 
-Route::match(['get', 'post'], '/myshop/{shop}/delete', [ShopController::class, 'deleteshop']);
+Route::match(['get', 'post'], '/myshop/{shop}/delete', [ShopController::class, 'deleteshop']);//
 
-Route::get('/shops/{shop_name}', [ShopController::class, 'showothershop']);
-
-Route::get('/myshop/{shop}/catalog', [CategoryController::class, 'showshoplots']);
+Route::get('/shops/{shop_name}', [ShopController::class, 'showothershop']);//
 
 Route::get('/admin', function () {
     return view('adminmain');
-})->name('adminmain');
+})->name('adminmain');//
 
-Route::match(['get', 'post'], '/admin/login', [AdminController::class, 'login']);
+Route::match(['get', 'post'], '/admin/login', [AdminController::class, 'login']);//
 
-Route::get('/admin/users', [AdminController::class, 'showusers']);
+Route::get('/admin/users', [AdminController::class, 'showusers']);//
 
-Route::get('/admin/shops', [AdminController::class, 'showshops']);
+Route::get('/admin/shops', [AdminController::class, 'showshops']);//
 
-Route::get('/admin/lots', [AdminController::class, 'showlots']);
+Route::get('/admin/lots', [AdminController::class, 'showlots']);//
 
-Route::get('/admin/reviews', [AdminController::class, 'showreviews']);
+Route::get('/admin/reviews', [AdminController::class, 'showreviews']);//
 
 Route::match(['get', 'post'], '/admin/change/user/{id}', [AdminUsersManageController::class, 'changeuser']);
 

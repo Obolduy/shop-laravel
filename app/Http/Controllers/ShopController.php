@@ -61,7 +61,10 @@ class ShopController extends Controller
 
     public function showothershop($shop_name)
     {
-        $lots = DB::select('select id, lot_name, price, count from lots where name = ?', [$shop_name])->get();
+        $lots = DB::table('shops')
+                ->join('lots', 'lots.shop_id', '=', 'shops.id')
+                ->select('lots.id', 'lots.category_id', 'lots.subcategory_id', 'lots.lot_name', 'lots.price', 'lots.count')
+                ->where('shops.shop_name', '=', $shop_name);
 
         return view('showothershop', ['lots' => $lots]);
     }
