@@ -17,8 +17,6 @@ use App\Http\Controllers\AdminShopsManageController;
 use App\Http\Controllers\AdminLotsManageController;
 use App\Http\Controllers\AdminReviewsManageController;
 
-Route::get('/test', [MainController::class, 'test']);
-
 Route::get('/', [MainController::class, 'main']);
 
 Route::match(['get', 'post'], '/login', [LoginController::class, 'login'])->name('login');
@@ -91,18 +89,18 @@ Route::get('/admin/lots', [AdminController::class, 'showlots']);//
 
 Route::get('/admin/reviews', [AdminController::class, 'showreviews']);//
 
-Route::match(['get', 'post'], '/admin/change/user/{id}', [AdminUsersManageController::class, 'changeuser']);
+Route::match(['get', 'post'], '/admin/change/user/{id}', [AdminUsersManageController::class, 'changeuser']);//
 
-Route::match(['get', 'post'], '/admin/change/shop/{id}', [AdminShopsManageController::class, 'changeshop']);
+Route::match(['get', 'post'], '/admin/change/shop/{id}', [AdminShopsManageController::class, 'changeshop']);//
 
-Route::match(['get', 'post'], '/admin/change/lot/{id}', [AdminLotsManageController::class, 'changelot']);
+Route::match(['get', 'post'], '/admin/change/lot/{id}', [AdminLotsManageController::class, 'changelot']);//
 
-Route::match(['get', 'post'], '/admin/change/review/{id}', [AdminReviewsManageController::class, 'changereview']);
+Route::match(['get', 'post'], '/admin/change/review/{id}', [AdminReviewsManageController::class, 'changereview']);//
 
-Route::post('/admin/delete/user/{id}', [AdminUsersManageController::class, 'deleteuser']);
+Route::post('/admin/delete/user/{id}', [AdminUsersManageController::class, 'deleteuser']);//
 
-Route::post('/admin/delete/shop/{id}', [AdminShopsManageController::class, 'deleteshop']);
+Route::post('/admin/delete/shop/{id}', [AdminShopsManageController::class, 'deleteshop']);//
 
-Route::post('/admin/delete/lot/{id}', [AdminLotsManageController::class, 'deletelot']);
+Route::post('/admin/delete/lot/{id}', [AdminLotsManageController::class, 'deletelot']);//
 
-Route::post('/admin/delete/review/{id}', [AdminReviewsManageController::class, 'deletereview']);
+Route::post('/admin/delete/review/{id}', [AdminReviewsManageController::class, 'deletereview']);//

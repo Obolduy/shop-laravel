@@ -7,20 +7,19 @@ use Illuminate\Support\Facades\DB;
 
 class AdminShopsManageController extends Controller
 {
-    public function changeshop($id)
+    public function changeshop(Request $request, $id)
     {
         $shop = DB::table('shops')
                 ->join('users', 'users.id', '=', 'shops.user_id')
-                ->join('lots', 'shops.id', '=', 'lots.shop_id')
-                ->select('lots.lot_name', 'lots.id', 'users.login', 'shops.id', 'shops.shop_name')
+                ->select('shops.shop_name', 'shops.id', 'shops.shop_name')
                 ->where('shops.id', '=', $id)->get();
         
         if ($request->isMethod('get')) {
-            return view('changeshop', ['shop' => $shop]);
+            return view('adminchangeshop', ['shop' => $shop]);
         }
 
-        DB::update('update shops set shop_name = ? where id = ?',
-            [$request->name, $id]); //
+        DB::update('update shops set shop_name = ?, shop_description = ?, updated_at = ? where id = ?',
+            [$request->shop_name, $request->shop_description, now(), $id]);
 
         return redirect();
     }

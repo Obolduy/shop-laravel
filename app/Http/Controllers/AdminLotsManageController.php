@@ -9,18 +9,14 @@ class AdminLotsManageController extends Controller
 {
     public function changelot(Request $request, $id)
     {
-        $lot = DB::table('lots')
-                ->join('shops', 'shops.id', '=', 'lots.shop_id')
-                ->join('users', 'users.id', '=', 'shops.user_id')
-                ->select('lots.*', 'users.login', 'shops.shop_name')
-                ->where('lots.id', '=', $id)->get();
+        $lot = DB::select('select * from lots where id = ?', [$id]);
         
         if ($request->isMethod('get')) {
-            return view('changelot', ['lot' => $lot]);
+            return view('adminchangelot', ['lot' => $lot]);
         }
 
-        DB::update('update lots set lot_name = ?, description = ?, price = ?, count = ? where id = ?',
-        [$request->name, $request->description, $request->price, $request->count, $id]); //
+        DB::update('update lots set lot_name = ?, lot_description = ?, price = ?, count = ?, updated_at = ? where id = ?',
+            [$request->lot_name, $request->lot_description, $request->price, $request->count, now(), $id]);
 
         return redirect();
     }

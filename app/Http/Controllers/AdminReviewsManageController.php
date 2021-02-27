@@ -7,21 +7,16 @@ use Illuminate\Support\Facades\DB;
 
 class AdminReviewsManageController extends Controller
 {
-    public function changereview($id)
+    public function changereview(Request $request, $id)
     {
-        $review = DB::table('reviews')
-                ->join('shops', 'shops.id', '=', 'lots.shop_id')
-                ->join('users', 'users.id', '=', 'reviews.user_id')
-                ->join('lots', 'lots.id', '=', 'reviews.lot_id')
-                ->select('lots.lot_name', 'lots.id', 'users.login', 'shops.shop_name', 'reviews.title', 'reviews.text')
-                ->where('reviews.id', '=', $id)->get();
+        $review = DB::select('select * from reviews where id = ?', [$id]);
         
         if ($request->isMethod('get')) {
-            return view('changereview', ['review' => $review]);
+            return view('adminchangereview', ['review' => $review]);
         }
 
         DB::update('update reviews set title = ?, text = ? where id = ?',
-            [$request->title, $request->text, $id]); //
+            [$request->title, $request->text, $id]);
 
         return redirect();
     }

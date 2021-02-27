@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminUsersManageController extends Controller
 {
-    public function changeuser($id)
+    public function changeuser(Request $request, $id)
     {
         $user = DB::table('users')
                     ->join('names', 'names.id', '=', 'users.name_id')
@@ -19,15 +19,13 @@ class AdminUsersManageController extends Controller
                     ->join('districts', 'districts.id', '=', 'users.district_id')
                     ->join('streets', 'streets.id', '=', 'users.street_id')
                     ->join('houses', 'houses.id', '=', 'users.house_id')
-                    ->join('shops', 'shops.id', '=', 'users.shop_id')
-                    ->join('lots', 'shops.id', '=', 'lots.shop_id')
                     ->select('users.login', 'users.email', 'users.email_verified_at', 'users.photo', 'names.name',
                              'surnames.surname', 'countries.country', 'states.state', 'cities.city', 'districts.district',
-                             'streets.street', 'houses.house', 'shops.shop_name')
-                    ->where('users.id', '=', $id)->get();
+                             'streets.street', 'houses.house', 'users.id')
+                    ->where('users.id', '=', $id);
         
         if ($request->isMethod('get')) {
-            return view('changeuser', ['user' => $user]);
+            return view('adminchangeuser', ['user' => $user]);
         }
 
         DB::update("update names set name = ? where user_id = ?", [$request->name, $id]);
