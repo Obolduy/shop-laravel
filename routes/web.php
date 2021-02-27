@@ -17,23 +17,23 @@ use App\Http\Controllers\AdminShopsManageController;
 use App\Http\Controllers\AdminLotsManageController;
 use App\Http\Controllers\AdminReviewsManageController;
 
-Route::get('/', [MainController::class, 'main']);
+Route::get('/', [MainController::class, 'main']);//
 
-Route::match(['get', 'post'], '/login', [LoginController::class, 'login'])->name('login');
+Route::match(['get', 'post'], '/login', [LoginController::class, 'login'])->name('login');// remember 
 
-Route::match(['get', 'post'], '/registration', [RegistrationController::class, 'registration'])->name('registration');
+Route::match(['get', 'post'], '/registration', [RegistrationController::class, 'registration'])->name('registration');//
 
-Route::get('/logout', [LoginController::class, 'logout']);
+Route::get('/logout', [LoginController::class, 'logout']);//
 
-Route::match(['get', 'post'], '/reset-password', [PasswordResetController::class, 'resetrequest']);
+Route::match(['get', 'post'], '/reset-password', [PasswordResetController::class, 'resetrequest']);//
 
-Route::match(['get', 'post'], '/reset-password/{token}', [PasswordResetController::class, 'reset']);
+Route::match(['get', 'post'], '/reset-password/{token}', [PasswordResetController::class, 'reset']);//
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
 
     return redirect('/');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+})->middleware(['auth', 'signed'])->name('verification.verify');//
 
 Route::get('/catalog/all', [CategoryController::class, 'showall']);//
 
