@@ -43,13 +43,13 @@ Route::get('/catalog/{category_id}/{subcategory_id}', [CategoryController::class
 
 Route::get('/catalog/{category_id}/{subcategory_id}/{lot_id}', [LotController::class, 'showlot']);
 
-Route::match(['get', 'post'], '/add_review/{lot_id}', [ReviewController::class, 'addreview']);//
+Route::post('/add_review/{lot_id}', [ReviewController::class, 'addreview']);
 
-Route::get('/cart', [CartController::class, 'showcart']);// аттэншн
+Route::get('/cart', [CartController::class, 'showcart']);
 
-Route::post('/cart/add/{lot_id}', [CartController::class, 'addtocart']);//
+Route::get('/cart/add/{lot_id}', [CartController::class, 'addtocart']);
 
-Route::post('/cart/delete/{lot_id}', [CartController::class, 'deletefromcart']);//
+Route::get('/cart/delete/{lot_id}', [CartController::class, 'deletefromcart']);
 
 Route::match(['get', 'post'], '/cart/buy/payment', [CartController::class, 'payform']);// автозаполнение некоторых
 

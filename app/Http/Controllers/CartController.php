@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 
 class CartController extends Controller
 {
@@ -12,14 +13,14 @@ class CartController extends Controller
     {
         $user_id = Auth::id();
 
-        if (!DB::table("cart_$user_id")->get()) {
+        if (!Schema::hasTable("cart_$user_id")) {
             $message = 'В Вашей корзине пусто!';
 
             return view('showcart', ['message' => $message]);
         } else {
             $lots = DB::table("cart_$user_id")
                     ->join('lots', 'lots.id', '=', "cart_$user_id.lot_id")
-                    ->select("cart_$user_id.*", 'lots.id', 'lots.lot_name', 'lots.category_id', 'lots.subcategory_id');
+                    ->select("cart_$user_id.*", 'lots.id', 'lots.lot_name', 'lots.price', 'lots.category_id', 'lots.subcategory_id')->get();
 
             return view('showcart', ['lots' => $lots]);
         }
@@ -28,12 +29,11 @@ class CartController extends Controller
     public function addtocart($lot_id)
     {
         $user_id = Auth::id();
-        
-        if (!DB::table("cart_$user_id")->get()) {
+
+        if (!Schema::hasTable("cart_$user_id")) {
             DB::statement("create table cart_$user_id 
             (
-                lot_id int not null,
-                lot_price int not null
+                lot_id int not null
             )");
         }
 
@@ -48,11 +48,11 @@ class CartController extends Controller
 
         DB::table("cart_$user_id")->where('lot_id', '=', $lot_id)->delete();
 
-        if (!DB::table("cart_$user_id")->get()) {
+        if (DB::table("cart_$user_id")->first() == null) {
             DB::statement("drop table cart_$user_id");
         }
 
-        return redirect();
+        return redirect('catalog/all');
     }
 
     public function payform(Request $request)
@@ -65,7 +65,7 @@ class CartController extends Controller
             'country' => 'required',
             'state' => 'required',
             'city' => 'required',
-            'dictrict' => 'required',
+            'district' => 'required',
             'street' => 'required',
             'house' => 'required',
             'credit_card' => 'required|min:15|max:19|integer',

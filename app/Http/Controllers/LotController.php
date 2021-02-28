@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LotController extends Controller
 {
-    public function showlot($lot_id)
+    public function showlot($category_id, $subcategory_id, $lot_id)
     {
         $lot = DB::select('select * from lots where id = ?', [$lot_id]);
 
@@ -20,7 +20,7 @@ class LotController extends Controller
         return view('showlot', ['lot' => $lot, 'reviews' => $reviews]);
     }
 
-    public function editlot($lot_id, Request $request)
+    public function editlot($category_id, $subcategory_id, $lot_id, Request $request)
     {
         if ($request->isMethod('get')) {
             $lot = DB::select('select lot_name, count, lot_description, price from lots where id = ?', [$lot_id]);

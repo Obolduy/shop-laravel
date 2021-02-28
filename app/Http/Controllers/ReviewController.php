@@ -14,8 +14,8 @@ class ReviewController extends Controller
         $text = htmlspecialchars($request->text);
 
         DB::insert('insert into reviews (title, text, lot_id, user_id, created_at) values (?, ?, ?, ?, ?)',
-            [$title, $title, $lot_id, Auth::id(), now()]);
+            [$title, $text, $lot_id, Auth::id(), now()]);
 
-        return redirect(); //
+        return redirect('/catalog/all');
     }
 }
