@@ -19,11 +19,11 @@ use App\Http\Controllers\AdminReviewsManageController;
 
 Route::get('/', [MainController::class, 'main']);//
 
-Route::match(['get', 'post'], '/login', [LoginController::class, 'login'])->name('login');// remember 
+Route::match(['get', 'post'], '/login', [LoginController::class, 'login'])->name('login');
 
 Route::match(['get', 'post'], '/registration', [RegistrationController::class, 'registration'])->name('registration');
 
-Route::get('/logout', [LoginController::class, 'logout']);//
+Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::match(['get', 'post'], '/reset-password', [PasswordResetController::class, 'resetrequest']);//
 
