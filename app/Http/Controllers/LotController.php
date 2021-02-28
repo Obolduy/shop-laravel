@@ -11,10 +11,11 @@ class LotController extends Controller
     public function showlot($lot_id)
     {
         $lot = DB::select('select * from lots where id = ?', [$lot_id]);
+
         $reviews = DB::table('reviews')
                     ->join('users', 'users.id', '=', 'reviews.user_id')
                     ->select('users.login', 'reviews.title', 'reviews.text', 'reviews.created_at')
-                    ->where('reviews.lot_id', '=', $lot_id);
+                    ->where('reviews.lot_id', '=', $lot_id)->get();
 
         return view('showlot', ['lot' => $lot, 'reviews' => $reviews]);
     }

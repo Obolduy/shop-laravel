@@ -21,7 +21,7 @@ Route::get('/', [MainController::class, 'main']);//
 
 Route::match(['get', 'post'], '/login', [LoginController::class, 'login'])->name('login');// remember 
 
-Route::match(['get', 'post'], '/registration', [RegistrationController::class, 'registration'])->name('registration');//
+Route::match(['get', 'post'], '/registration', [RegistrationController::class, 'registration'])->name('registration');
 
 Route::get('/logout', [LoginController::class, 'logout']);//
 
@@ -35,13 +35,13 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     return redirect('/');
 })->middleware(['auth', 'signed'])->name('verification.verify');//
 
-Route::get('/catalog/all', [CategoryController::class, 'showall']);//
+Route::get('/catalog/all', [CategoryController::class, 'showall']);
 
-Route::get('/catalog/{category_id}', [CategoryController::class, 'showcategory']);//
+Route::get('/catalog/{category_id}', [CategoryController::class, 'showcategory']);
 
-Route::get('/catalog/{category_id}/{subcategory_id}', [CategoryController::class, 'showsubcategory']);//
+Route::get('/catalog/{category_id}/{subcategory_id}', [CategoryController::class, 'showsubcategory']);
 
-Route::get('/catalog/{category_id}/{subcategory_id}/{lot_id}', [LotController::class, 'showlot']);//
+Route::get('/catalog/{category_id}/{subcategory_id}/{lot_id}', [LotController::class, 'showlot']);
 
 Route::match(['get', 'post'], '/add_review/{lot_id}', [ReviewController::class, 'addreview']);//
 

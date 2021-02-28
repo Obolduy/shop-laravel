@@ -6,7 +6,8 @@
 <p>{{$elem->count}}</p>
 <p><i>{{$elem->created_at}}</i></p>
 <p><a href="/cart/add/{{$elem->id}}">Добавить в корзину</a></p><br>
-<form method="POST" action="/add_review/{{$elem->lot_id}}">
+
+<form method="POST" action="/add_review/{{$elem->id}}">
     @csrf
     <p>Название отзыва:<input type="text" name="title"></p>
     <p><textarea name="text"></textarea></p>

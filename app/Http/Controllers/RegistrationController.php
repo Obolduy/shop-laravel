@@ -34,34 +34,42 @@ class RegistrationController extends Controller
         DB::insert('insert into users (login, password, email, registration_time, status_id, ban_id)
                 values (?, ?, ?, ?, ?, ?)', [$request->login, Hash::make($request->password), $request->email, now(), 1, 0]);
 
-        $user_id = DB::select('select id from users where login = ?', [$request->login]);
+        $user = DB::select('select id from users where login = ?', [$request->login]);
         
-        DB::insert('insert into names (name, user_id) values (?, ?)', [$request->name, $user_id]);
-        DB::insert('insert into surnames (surname, user_id) values (?, ?)', [$request->surname, $user_id]);
-        DB::insert('insert into countries (country, user_id) values (?, ?)', [$request->country, $user_id]);
-        DB::insert('insert into states (state, user_id) values (?, ?)', [$request->state, $user_id]);
-        DB::insert('insert into cities (city, user_id) values (?, ?)', [$request->city, $user_id]);
-        DB::insert('insert into districts (district, user_id) values (?, ?)', [$request->district, $user_id]);
-        DB::insert('insert into streets (street, user_id) values (?, ?)', [$request->street, $user_id]);
-        DB::insert('insert into houses (house, user_id) values (?, ?)', [$request->house, $user_id]);
-        
-        $name_id = DB::select('select id from names where user_id = ?', [$user_id]);
-        $surname_id = DB::select('select id from surnames where user_id = ?', [$user_id]);
-        $country_id = DB::select('select id from countries where user_id = ?', [$user_id]);
-        $state_id = DB::select('select id from states where user_id = ?', [$user_id]);
-        $city_id = DB::select('select id from cities where user_id = ?', [$user_id]);
-        $district_id = DB::select('select id from districts where user_id = ?', [$user_id]);
-        $street_id = DB::select('select id from streets where user_id = ?', [$user_id]);
-        $house_id = DB::select('select id from houses where user_id = ?', [$user_id]);
+        foreach ($user as $user_id) {
+            DB::insert('insert into names (name, user_id) values (?, ?)', [$request->name, $user_id->id]);
+            DB::insert('insert into surnames (surname, user_id) values (?, ?)', [$request->surname, $user_id->id]);
+            DB::insert('insert into countries (country, user_id) values (?, ?)', [$request->country, $user_id->id]);
+            DB::insert('insert into states (state, user_id) values (?, ?)', [$request->state, $user_id->id]);
+            DB::insert('insert into cities (city, user_id) values (?, ?)', [$request->city, $user_id->id]);
+            DB::insert('insert into districts (district, user_id) values (?, ?)', [$request->district, $user_id->id]);
+            DB::insert('insert into streets (street, user_id) values (?, ?)', [$request->street, $user_id->id]);
+            DB::insert('insert into houses (house, user_id) values (?, ?)', [$request->house, $user_id->id]);
 
-        DB::update(
-            "update users set name_id = ?, surname_id = ?, country_id = ?,
-            state_id = ?, city_id = ?, district_id = ?,
-            street_id = ?, house_id = ?, where login = ?",
-            [$name_id, $surname_id, $country_id,
-            $state_id, $city_id, $district_id,
-            $street_id, $house_id, $request->login]
-        );
+            $data = DB::table('users')
+                    ->join('names', 'names.user_id', '=', 'users.id')
+                    ->join('surnames', 'surnames.user_id', '=', 'users.id')
+                    ->join('countries', 'countries.user_id', '=', 'users.id')
+                    ->join('states', 'states.user_id', '=', 'users.id')
+                    ->join('cities', 'cities.user_id', '=', 'users.id')
+                    ->join('districts', 'districts.user_id', '=', 'users.id')
+                    ->join('streets', 'streets.user_id', '=', 'users.id')
+                    ->join('houses', 'houses.user_id', '=', 'users.id')
+                    ->select('names.id as name_id', 'surnames.id as surname_id', 'countries.id as country_id', 'states.id as state_id',
+                        'cities.id as city_id', 'districts.id as district_id', 'streets.id as street_id', 'houses.id as house_id')
+                    ->where('users.id', '=', $user_id->id)->get();
+
+            foreach ($data as $elem) {
+                DB::update(
+                    "update users set name_id = ?, surname_id = ?, country_id = ?,
+                    state_id = ?, city_id = ?, district_id = ?,
+                    street_id = ?, house_id = ? where login = ?",
+                    [$elem->name_id, $elem->surname_id, $elem->country_id,
+                    $elem->state_id, $elem->city_id, $elem->district_id,
+                    $elem->street_id, $elem->house_id, $request->login]
+                );
+            }
+        }
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
 
