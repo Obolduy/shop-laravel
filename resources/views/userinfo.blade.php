@@ -11,7 +11,11 @@
 <p>Район: {{$elem->district}}</p>
 <p>Улица: {{$elem->street}}</p>
 <p>Дом: {{$elem->house}}</p>
-<p>Магазин: @if(Auth::user()->shop_id) {{$elem->shop}} @else <i>Отсутствует</i> @endif</p>
+<p>Магазин: @if(Auth::user()->shop_id) {{$elem->shop_name}} @else <i>Отсутствует</i> @endif</p>
 @endforeach
+<p><a href="/profile/change">Изменить данные</a></p>
+<p><a href="/profile/delete">Удалить профиль</a></p>
+<p><a href="/profile/my_shop">Мой магазин</a></p>
+<p><a href="/profile/my_reviews">Мои отзывы</a></p>
 @endsection
 @include('layout')

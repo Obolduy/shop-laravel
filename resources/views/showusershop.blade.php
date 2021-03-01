@@ -12,4 +12,4 @@
    </tr>
   @endforeach
 </table>
-<p><a href="/myshop/{{$shop_name}}/change">Изменить</a></p>
+<!--<p><a href="/myshop/change">Изменить</a></p>-->

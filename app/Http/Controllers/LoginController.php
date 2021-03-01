@@ -30,7 +30,7 @@ class LoginController extends Controller
 
             $request->session()->put(['auth' => 1]);
 
-            if ($request->remember == 1) {
+            if ($request->remember === 1) {
                 $remembertoken = DB::select('select remember_token from users where email = ?', [$request->email]);
 
                 foreach($remembertoken as $elem) {

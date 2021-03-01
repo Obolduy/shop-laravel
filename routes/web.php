@@ -51,21 +51,21 @@ Route::get('/cart/add/{lot_id}', [CartController::class, 'addtocart']);
 
 Route::get('/cart/delete/{lot_id}', [CartController::class, 'deletefromcart']);
 
-Route::match(['get', 'post'], '/cart/buy/payment', [CartController::class, 'payform']);// автозаполнение некоторых
+Route::match(['get', 'post'], '/cart/buy/payment', [CartController::class, 'payform']);
 
-Route::get('/cart/buy/payment/success', [CartController::class, 'paymentsuccess']);// В приемлимый вид
+Route::get('/cart/buy/payment/success', [CartController::class, 'paymentsuccess']);
 
-Route::get('/profile', [UserController::class, 'showprofile']);// Аналогично + аватар
+Route::get('/profile', [UserController::class, 'showprofile']);
 
-Route::match(['get', 'post'], '/profile/change', [UserController::class, 'changeprofile']);// аватар и ко
+Route::match(['get', 'post'], '/profile/change', [UserController::class, 'changeprofile']);
 
-Route::match(['get', 'post'], '/profile/delete', [UserController::class, 'deleteprofile']);//
+Route::match(['get', 'post'], '/profile/delete', [UserController::class, 'deleteprofile']);
 
-Route::get('/profile/my_shop', [UserController::class, 'showusershop']);//
+Route::get('/profile/my_shop', [UserController::class, 'showusershop']);
 
-Route::get('/profile/my_reviews', [UserController::class, 'showuserreviews']);//
+Route::get('/profile/my_reviews', [UserController::class, 'showuserreviews']);
 
-Route::match(['get', 'post'], '/create-shop', [ShopController::class, 'createshop']);//
+Route::match(['get', 'post'], '/create-shop', [ShopController::class, 'createshop']);
 
 Route::match(['get', 'post'], '/myshop/{shop}/change', [ShopController::class, 'changeshop']);//
 

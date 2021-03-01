@@ -4,23 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
     public function showprofile()
     {
         $info = DB::table('users')
-                    ->join('names', 'names.id', '=', 'users.name_id')
-                    ->join('surnames', 'surnames.id', '=', 'users.surname_id')
-                    ->join('countries', 'countries.id', '=', 'users.country_id')
-                    ->join('states', 'states.id', '=', 'users.state_id')
-                    ->join('cities', 'cities.id', '=', 'users.city_id')
-                    ->join('districts', 'districts.id', '=', 'users.district_id')
-                    ->join('streets', 'streets.id', '=', 'users.street_id')
-                    ->join('houses', 'houses.id', '=', 'users.house_id')
-                    ->join('shops', 'shops.id', '=', 'users.shop_id')
+                    ->leftJoin('names', 'names.id', '=', 'users.name_id')
+                    ->leftJoin('surnames', 'surnames.id', '=', 'users.surname_id')
+                    ->leftJoin('countries', 'countries.id', '=', 'users.country_id')
+                    ->leftJoin('states', 'states.id', '=', 'users.state_id')
+                    ->leftJoin('cities', 'cities.id', '=', 'users.city_id')
+                    ->leftJoin('districts', 'districts.id', '=', 'users.district_id')
+                    ->leftJoin('streets', 'streets.id', '=', 'users.street_id')
+                    ->leftJoin('houses', 'houses.id', '=', 'users.house_id')
+                    ->leftJoin('shops', 'shops.id', '=', 'users.shop_id')
                     ->select('users.login', 'users.email', 'users.email_verified_at', 'users.photo', 'names.name',
                              'surnames.surname', 'countries.country', 'states.state', 'cities.city', 'districts.district',
                              'streets.street', 'houses.house', 'shops.shop_name')
@@ -53,11 +56,11 @@ class UserController extends Controller
 
         Validator::make($request->all(), [
             'login' => [
-                'required', Rule::unique('users')->ignore($user),
+                'required', Rule::unique('users')->ignore(Auth::id()),
                 'between:4,32', 'alpha_dash'
             ],
             'email' => [
-                'required', Rule::unique('users')->ignore($user), 'different:login'
+                'required', Rule::unique('users')->ignore(Auth::id()), 'different:login'
             ],
             'name' => [
                 'required', 'max:32', 'alpha'
@@ -92,7 +95,6 @@ class UserController extends Controller
         ]);
 
         if (password_verify($request->password, Auth::user()->password)) {
-
             DB::update("update names set name = ? where user_id = ?", [$request->name, Auth::id()]);
             DB::update("update surnames set surname = ? where user_id = ?", [$request->surname, Auth::id()]);
             DB::update("update countries set country = ? where user_id = ?", [$request->country, Auth::id()]);
@@ -125,14 +127,16 @@ class UserController extends Controller
             return view('deleteprofile');
         }
 
-        if (Auth::attempt(['password' => $request->password])) {
+        if (password_verify($request->password, Auth::user()->password)) {
             if (Auth::user()->photo) {
                 Storage::delete('public/imagestorage/avatars/'.Auth::user()->photo);
             }
 
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
+            $user_id = Auth::id();
 
+            if (Schema::hasTable("cart_$user_id")) {
+                DB::table("cart_$user_id")->delete();
+            }
             DB::table('names')->where('user_id', Auth::id())->delete();
             DB::table('surnames')->where('user_id', Auth::id())->delete();
             DB::table('countries')->where('user_id', Auth::id())->delete();
@@ -144,34 +148,39 @@ class UserController extends Controller
             DB::table('shops')->where('user_id', Auth::id())->delete();
             DB::table('users')->where('id', Auth::id())->delete();
 
+            if (isset($_COOKIE['remember_me'])) {
+                setcookie('remember_me', '', time());
+            }
+
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
             Auth::logout();
 
-            return redirect();
+            return redirect('/');
         }
     }
 
     public function showusershop()
     {
         $shop = DB::table('shops')
-                ->join('lots', 'lots.shop_id', '=', 'shops.id')
+                ->leftJoin('lots', 'lots.shop_id', '=', 'shops.id')
                 ->select('shops.shop_name', 'lots.lot_name', 'lots.price', 
                     'lots.id', 'lots.subcategory_id', 'lots.category_id', 'lots.count')
-                ->where('shops.user_id', '=', 'users.id');
+                ->where('shops.user_id', '=', Auth::id())
+                ->get();
         
-        foreach($shop as $elem) {
-            $shop_name = $elem->shop_name;
-        }
-        
-        return view('showusershop', ['shop' => $shop, 'shop_name' => $shop_name]);
+        return view('showusershop', ['shop' => $shop]);
     }
 
     public function showuserreviews()
     {
         $reviews = DB::table('reviews')
-                ->join('lots', 'reviews.lot_id', '=', 'lots.id')
-                ->select('lots.lot_name', 'review.title', 'review.text',
-                    'lots.subcategory_id', 'lots.category_id', 'lots.id', 'review.created_at')
-                ->where('reviews.user_id', '=', 'users.id');
+                ->leftJoin('lots', 'reviews.lot_id', '=', 'lots.id')
+                ->select('lots.lot_name', 'reviews.title', 'reviews.text',
+                    'lots.subcategory_id', 'lots.category_id', 'lots.id', 'reviews.created_at')
+                ->where('reviews.user_id', '=', Auth::user()->id)
+                ->get();
         
         return view('showuserreviews', ['reviews' => $reviews]);
     }
