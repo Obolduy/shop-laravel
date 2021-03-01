@@ -6,6 +6,7 @@
 <p>{{$lot->price}}</p>
 <p><a href="/cart/delete/{{$lot->id}}">Удалить из корзины</a></p>
 @endforeach
+<p><a href="/cart/buy/payment">Купить</a></p>
 @endif
 @endsection
 @include('layout')

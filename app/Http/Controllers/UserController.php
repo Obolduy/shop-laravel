@@ -24,7 +24,8 @@ class UserController extends Controller
                     ->select('users.login', 'users.email', 'users.email_verified_at', 'users.photo', 'names.name',
                              'surnames.surname', 'countries.country', 'states.state', 'cities.city', 'districts.district',
                              'streets.street', 'houses.house', 'shops.shop_name')
-                    ->where('users.login', '=', Auth::id())->get();
+                    ->where('users.id', '=', Auth::id())
+                    ->get();
 
         return view('userinfo', ['info' => $info]);
     }
@@ -44,7 +45,8 @@ class UserController extends Controller
                     ->select('users.login', 'users.email', 'users.id', 'names.name', 'surnames.surname',
                              'countries.country', 'states.state', 'cities.city', 'districts.district',
                              'streets.street', 'houses.house')
-                    ->where('users.id', '=', Auth::id())->get();
+                    ->where('users.id', '=', Auth::id())
+                    ->get();
             
             return view('changeprofile', ['user' => $user]);
         }

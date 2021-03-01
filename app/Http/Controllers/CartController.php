@@ -58,7 +58,22 @@ class CartController extends Controller
     public function payform(Request $request)
     {
         if ($request->isMethod('get')) {
-            return view('payform');
+            $user_info = DB::table('users')
+                    ->join('names', 'names.id', '=', 'users.name_id')
+                    ->join('surnames', 'surnames.id', '=', 'users.surname_id')
+                    ->join('countries', 'countries.id', '=', 'users.country_id')
+                    ->join('states', 'states.id', '=', 'users.state_id')
+                    ->join('cities', 'cities.id', '=', 'users.city_id')
+                    ->join('districts', 'districts.id', '=', 'users.district_id')
+                    ->join('streets', 'streets.id', '=', 'users.street_id')
+                    ->join('houses', 'houses.id', '=', 'users.house_id')
+                    ->select('users.login', 'users.email', 'users.photo', 'names.name',
+                             'surnames.surname', 'countries.country', 'states.state', 'cities.city', 'districts.district',
+                             'streets.street', 'houses.house')
+                    ->where('users.id', '=', Auth::id())
+                    ->get();
+
+            return view('payform', ['user_info' => $user_info]);
         }
 
         $validated = $request->validate([
@@ -68,18 +83,18 @@ class CartController extends Controller
             'district' => 'required',
             'street' => 'required',
             'house' => 'required',
-            'credit_card' => 'required|min:15|max:19|integer',
-            'code' => 'required|digit:3',
+            'credit_card' => 'required|digits_between:15,19',
+            'code' => 'required|digits:3',
             'name' => 'required|alpha',
             'surname' => 'required|alpha',
-            'month' => 'required|digit:2',
-            'year' => 'required|digit:4'
+            'month' => 'required|digits:2',
+            'year' => 'required|digits:4'
         ]);
 
-        $user_id = Auth::id();
+        $user_id = Auth::user()->id;
 
         DB::table('lots')
-            ->join("cart_$user_id", "cart_$user_id.lot_id", 'lots.id')
+            ->join("cart_$user_id", "cart_$user_id.lot_id", '=', 'lots.id')
             ->select('lots.count')
             ->decrement('lots.count');
 
@@ -88,6 +103,8 @@ class CartController extends Controller
 
     public function paymentsuccess()
     {
+        $user_id = Auth::user()->id;
+        
         DB::statement("drop table cart_$user_id");
 
         return view('paymentsuccess');
