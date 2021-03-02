@@ -67,13 +67,13 @@ Route::get('/profile/my_reviews', [UserController::class, 'showuserreviews']);
 
 Route::match(['get', 'post'], '/create-shop', [ShopController::class, 'createshop']);
 
-Route::match(['get', 'post'], '/myshop/{shop}/change', [ShopController::class, 'changeshop']);//
+Route::match(['get', 'post'], '/myshop/{shop}/change', [ShopController::class, 'changeshop']);
 
-Route::match(['get', 'post'], '/myshop/{shop}/manage_lots/{lot_id}', [LotController::class, 'editlot']);//
+Route::match(['get', 'post'], '/myshop/{shop}/manage_lots/{lot_id}', [LotController::class, 'editlot']);
 
-Route::match(['get', 'post'], '/myshop/{shop}/delete', [ShopController::class, 'deleteshop']);//
+Route::match(['get', 'post'], '/myshop/{shop}/delete', [ShopController::class, 'deleteshop']);
 
-Route::get('/shops/{shop_name}', [ShopController::class, 'showothershop']);//
+Route::get('/shops/{shop_name}', [ShopController::class, 'showothershop']);
 
 Route::get('/admin', function () {
     return view('adminmain');

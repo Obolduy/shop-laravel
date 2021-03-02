@@ -41,15 +41,16 @@ class ShopController extends Controller
     public function changeshop($shop, Request $request)
     {
         if ($request->isMethod('get')) {
-            $shop = DB::select('select shop_name, shop_description from shops where user_id = ?', [Auth::id()]);
+            $shop = DB::select('select shop_name, shop_description, showing from shops where user_id = ?', [Auth::id()]);
 
             return view('changeshop', ['shop' => $shop]);
         }
 
-        DB::update('update shops set shop_name = ?, shop_description = ?, updated_at = ? where user_id = ?',
-            [htmlspecialchars($request->shop_name), htmlspecialchars($request->shop_description), now(), Auth::id()]); /////
+        DB::update('update shops set shop_name = ?, shop_description = ?, showing = ?, updated_at = ? where user_id = ?',
+            [htmlspecialchars($request->shop_name), htmlspecialchars($request->shop_description),
+                $request->showing, now(), Auth::id()]);
 
-        return redirect();
+        return redirect('/profile/my_shop');
     }
 
     public function deleteshop($shop, Request $request)
@@ -58,21 +59,26 @@ class ShopController extends Controller
             return view('deleteshop');
         }
 
-        if (Auth::attempt(['password' => $password])) {
-            $shop = DB::select('select * from shops where user_id = ?', [Auth::id()])->get();
-            DB::delete('delete lots where shop_id = ?', [$shop]);
-            DB::delete('delete shops where user_id = ?', [Auth::id()]);
+        if (password_verify($request->password, Auth::user()->password)) {
+            $shop = DB::select('select id from shops where user_id = ?', [Auth::id()]);
 
-            return redirect();
+            foreach($shop as $elem) {
+                DB::delete('delete from lots where shop_id = ?', [$elem->id]);
+            }
+
+            DB::delete('delete from shops where user_id = ?', [Auth::id()]);
+
+            return redirect('/profile');
         }
     }
 
     public function showothershop($shop_name)
     {
         $lots = DB::table('shops')
-                ->join('lots', 'lots.shop_id', '=', 'shops.id')
+                ->leftJoin('lots', 'lots.shop_id', '=', 'shops.id')
                 ->select('lots.id', 'lots.category_id', 'lots.subcategory_id', 'lots.lot_name', 'lots.price', 'lots.count')
-                ->where('shops.shop_name', '=', $shop_name);
+                ->where('shops.shop_name', '=', $shop_name)
+                ->get();
 
         return view('showothershop', ['lots' => $lots]);
     }

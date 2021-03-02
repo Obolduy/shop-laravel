@@ -20,7 +20,7 @@ class LotController extends Controller
         return view('showlot', ['lot' => $lot, 'reviews' => $reviews]);
     }
 
-    public function editlot($category_id, $subcategory_id, $lot_id, Request $request)
+    public function editlot($shop, $lot_id, Request $request)
     {
         if ($request->isMethod('get')) {
             $lot = DB::select('select lot_name, count, lot_description, price from lots where id = ?', [$lot_id]);
@@ -28,16 +28,16 @@ class LotController extends Controller
             return view('editlot', ['lot' => $lot]);
         }
 
-        if (Auth::attempt(['password' => $password])) {
+        if (password_verify($request->password, Auth::user()->password)) {
             if ($request->delete == 1) {
-                DB::delete('delete lots where id = ?', [$lot_id]);
+                DB::delete('delete from lots where id = ?', [$lot_id]);
             }
 
             DB::update('update lots set lot_name = ?, count = ?, lot_description = ?, price = ? where id = ?',
                 [htmlspecialchars($request->name), htmlspecialchars($request->count),
                 htmlspecialchars($request->description), htmlspecialchars($request->price), htmlspecialchars($lot_id)]);
 
-            return redirect();
+            return redirect('/');
         }
     }
 }
