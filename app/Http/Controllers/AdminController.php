@@ -21,17 +21,18 @@ class AdminController extends Controller
     public function showusers()
     {
         $users = DB::table('users')
-                ->join('names', 'names.user_id', '=', 'users.id')
-                ->join('surnames', 'surnames.user_id', '=', 'users.id')
-                ->join('countries', 'countries.id', '=', 'users.country_id')
-                ->join('states', 'states.id', '=', 'users.state_id')
-                ->join('cities', 'cities.id', '=', 'users.city_id')
-                ->join('districts', 'districts.id', '=', 'users.district_id')
-                ->join('streets', 'streets.id', '=', 'users.street_id')
-                ->join('houses', 'houses.id', '=', 'users.house_id')
+                ->leftJoin('names', 'names.user_id', '=', 'users.id')
+                ->leftJoin('surnames', 'surnames.user_id', '=', 'users.id')
+                ->leftJoin('countries', 'countries.id', '=', 'users.country_id')
+                ->leftJoin('states', 'states.id', '=', 'users.state_id')
+                ->leftJoin('cities', 'cities.id', '=', 'users.city_id')
+                ->leftJoin('districts', 'districts.id', '=', 'users.district_id')
+                ->leftJoin('streets', 'streets.id', '=', 'users.street_id')
+                ->leftJoin('houses', 'houses.id', '=', 'users.house_id')
                 ->select('users.login', 'users.email', 'users.id', 'names.name', 'surnames.surname',
                     'countries.country', 'states.state', 'cities.city', 'districts.district',
-                    'streets.street', 'houses.house');
+                    'streets.street', 'houses.house', 'users.registration_time')
+                ->get();
 
         return view('adminshowusers', ['users' => $users]);
     }
@@ -46,11 +47,12 @@ class AdminController extends Controller
     public function showlots()
     {
         $lots = DB::table('lots')
-                ->join('shops', 'lots.shop_id', '=', 'shops.id')
-                ->join('categories', 'lots.category_id', '=', 'categories.id')
-                ->join('subcategories', 'lots.subcategory_id', '=', 'subcategories.id')
+                ->leftJoin('shops', 'lots.shop_id', '=', 'shops.id')
+                ->leftJoin('categories', 'lots.category_id', '=', 'categories.id')
+                ->leftJoin('subcategories', 'lots.subcategory_id', '=', 'subcategories.id')
                 ->select('lots.lot_name', 'lots.id', 'lots.price', 'lots.created_at',
-                    'lots.count', 'categories.category', 'subcategories.subcategory', 'shops.shop_name');
+                    'lots.count', 'categories.category', 'subcategories.subcategory', 'shops.shop_name')
+                ->get();
 
         return view('adminshowlots', ['lots' => $lots]);
     }
@@ -58,12 +60,13 @@ class AdminController extends Controller
     public function showreviews()
     {
         $reviews = DB::table('reviews')
-                    ->join('shops', 'lots.shop_id', '=', 'shops.id')
-                    ->join('lots', 'lots.id', '=', 'reviews.lot_id')
-                    ->join('users', 'users.id', '=', 'reviews.user_id')
+                    ->leftJoin('lots', 'lots.id', '=', 'reviews.lot_id')
+                    ->leftJoin('users', 'users.id', '=', 'reviews.user_id')
+                    ->leftJoin('shops', 'lots.shop_id', '=', 'shops.id')
                     ->select('lots.lot_name', 'shops.shop_name', 'reviews.id',
                         'lots.subcategory_id', 'lots.category_id', 'reviews.lot_id',
-                        'reviews.title', 'reviews.created_at', 'users.login');
+                        'reviews.title', 'reviews.created_at', 'users.login')
+                    ->get();
 
         return view('adminshowreviews', ['reviews' => $reviews]);
     }

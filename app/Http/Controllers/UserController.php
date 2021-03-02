@@ -137,6 +137,7 @@ class UserController extends Controller
             if (Schema::hasTable("cart_$user_id")) {
                 DB::table("cart_$user_id")->delete();
             }
+            
             DB::table('names')->where('user_id', Auth::id())->delete();
             DB::table('surnames')->where('user_id', Auth::id())->delete();
             DB::table('countries')->where('user_id', Auth::id())->delete();

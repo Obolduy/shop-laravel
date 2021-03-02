@@ -77,30 +77,30 @@ Route::get('/shops/{shop_name}', [ShopController::class, 'showothershop']);
 
 Route::get('/admin', function () {
     return view('adminmain');
-})->name('adminmain');//
+})->name('adminmain');
 
 Route::match(['get', 'post'], '/admin/login', [AdminController::class, 'login']);//
 
-Route::get('/admin/users', [AdminController::class, 'showusers']);//
+Route::get('/admin/users', [AdminController::class, 'showusers']);
 
-Route::get('/admin/shops', [AdminController::class, 'showshops']);//
+Route::get('/admin/shops', [AdminController::class, 'showshops']);
 
-Route::get('/admin/lots', [AdminController::class, 'showlots']);//
+Route::get('/admin/lots', [AdminController::class, 'showlots']);
 
-Route::get('/admin/reviews', [AdminController::class, 'showreviews']);//
+Route::get('/admin/reviews', [AdminController::class, 'showreviews']);
 
-Route::match(['get', 'post'], '/admin/change/user/{id}', [AdminUsersManageController::class, 'changeuser']);//
+Route::match(['get', 'post'], '/admin/change/user/{id}', [AdminUsersManageController::class, 'changeuser']);
 
-Route::match(['get', 'post'], '/admin/change/shop/{id}', [AdminShopsManageController::class, 'changeshop']);//
+Route::match(['get', 'post'], '/admin/change/shop/{id}', [AdminShopsManageController::class, 'changeshop']);
 
-Route::match(['get', 'post'], '/admin/change/lot/{id}', [AdminLotsManageController::class, 'changelot']);//
+Route::match(['get', 'post'], '/admin/change/lot/{id}', [AdminLotsManageController::class, 'changelot']);
 
-Route::match(['get', 'post'], '/admin/change/review/{id}', [AdminReviewsManageController::class, 'changereview']);//
+Route::match(['get', 'post'], '/admin/change/review/{id}', [AdminReviewsManageController::class, 'changereview']);
 
-Route::post('/admin/delete/user/{id}', [AdminUsersManageController::class, 'deleteuser']);//
+Route::get('/admin/delete/user/{id}', [AdminUsersManageController::class, 'deleteuser']);
 
-Route::post('/admin/delete/shop/{id}', [AdminShopsManageController::class, 'deleteshop']);//
+Route::get('/admin/delete/shop/{id}', [AdminShopsManageController::class, 'deleteshop']);
 
-Route::post('/admin/delete/lot/{id}', [AdminLotsManageController::class, 'deletelot']);//
+Route::get('/admin/delete/lot/{id}', [AdminLotsManageController::class, 'deletelot']);
 
-Route::post('/admin/delete/review/{id}', [AdminReviewsManageController::class, 'deletereview']);//
+Route::get('/admin/delete/review/{id}', [AdminReviewsManageController::class, 'deletereview']);

@@ -18,13 +18,13 @@ class AdminReviewsManageController extends Controller
         DB::update('update reviews set title = ?, text = ? where id = ?',
             [$request->title, $request->text, $id]);
 
-        return redirect();
+        return redirect('/');
     }
 
     public function deletereview($id)
     {
-        DB::delete('delete reviews where id = ?', [$id]);
+        DB::delete('delete from reviews where id = ?', [$id]);
 
-        return redirect();
+        return redirect('/');
     }
 }

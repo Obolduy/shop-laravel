@@ -9,10 +9,7 @@ class AdminShopsManageController extends Controller
 {
     public function changeshop(Request $request, $id)
     {
-        $shop = DB::table('shops')
-                ->join('users', 'users.id', '=', 'shops.user_id')
-                ->select('shops.shop_name', 'shops.id', 'shops.shop_name')
-                ->where('shops.id', '=', $id)->get();
+        $shop = DB::select('select id, shop_name, shop_description from shops where id = ?', [$id]);
         
         if ($request->isMethod('get')) {
             return view('adminchangeshop', ['shop' => $shop]);
@@ -21,14 +18,14 @@ class AdminShopsManageController extends Controller
         DB::update('update shops set shop_name = ?, shop_description = ?, updated_at = ? where id = ?',
             [$request->shop_name, $request->shop_description, now(), $id]);
 
-        return redirect();
+        return redirect('/');
     }
 
     public function deleteshop($id)
     {
-        DB::delete('delete shops where id = ?', [$id]);
-        DB::delete('delete lots where shop_id = ?', [$id]);
+        DB::delete('delete from shops where id = ?', [$id]);
+        DB::delete('delete from lots where shop_id = ?', [$id]);
 
-        return redirect();
+        return redirect('/');
     }
 }

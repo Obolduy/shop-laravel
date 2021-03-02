@@ -18,13 +18,13 @@ class AdminLotsManageController extends Controller
         DB::update('update lots set lot_name = ?, lot_description = ?, price = ?, count = ?, updated_at = ? where id = ?',
             [$request->lot_name, $request->lot_description, $request->price, $request->count, now(), $id]);
 
-        return redirect();
+        return redirect('/');
     }
 
     public function deletelot($id)
     {
-        DB::delete('delete lots where id = ?', [$id]);
+        DB::delete('delete from lots where id = ?', [$id]);
 
-        return redirect();
+        return redirect('/');
     }
 }

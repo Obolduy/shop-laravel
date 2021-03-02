@@ -5,24 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 
 class AdminUsersManageController extends Controller
 {
     public function changeuser(Request $request, $id)
     {
         $user = DB::table('users')
-                    ->join('names', 'names.id', '=', 'users.name_id')
-                    ->join('surnames', 'surnames.id', '=', 'users.surname_id')
-                    ->join('countries', 'countries.id', '=', 'users.country_id')
-                    ->join('states', 'states.id', '=', 'users.state_id')
-                    ->join('cities', 'cities.id', '=', 'users.city_id')
-                    ->join('districts', 'districts.id', '=', 'users.district_id')
-                    ->join('streets', 'streets.id', '=', 'users.street_id')
-                    ->join('houses', 'houses.id', '=', 'users.house_id')
+                    ->leftJoin('names', 'names.id', '=', 'users.name_id')
+                    ->leftJoin('surnames', 'surnames.id', '=', 'users.surname_id')
+                    ->leftJoin('countries', 'countries.id', '=', 'users.country_id')
+                    ->leftJoin('states', 'states.id', '=', 'users.state_id')
+                    ->leftJoin('cities', 'cities.id', '=', 'users.city_id')
+                    ->leftJoin('districts', 'districts.id', '=', 'users.district_id')
+                    ->leftJoin('streets', 'streets.id', '=', 'users.street_id')
+                    ->leftJoin('houses', 'houses.id', '=', 'users.house_id')
                     ->select('users.login', 'users.email', 'users.email_verified_at', 'users.photo', 'names.name',
                              'surnames.surname', 'countries.country', 'states.state', 'cities.city', 'districts.district',
                              'streets.street', 'houses.house', 'users.id')
-                    ->where('users.id', '=', $id);
+                    ->where('users.id', '=', $id)
+                    ->get();
         
         if ($request->isMethod('get')) {
             return view('adminchangeuser', ['user' => $user]);
@@ -38,11 +40,14 @@ class AdminUsersManageController extends Controller
         DB::update("update houses set house = ? where user_id = ?", [$request->house, $id]);
         DB::update("update users set login = ?, email = ? where id = ?", [$request->login, $request->email, $id]);
 
-        return redirect();
+        return redirect('/');
     }
 
     public function deleteuser($id)
     {
+        if (Schema::hasTable("cart_$id")) {
+            DB::table("cart_$id")->delete();
+        }
         DB::table('names')->where('user_id', $id)->delete();
         DB::table('surnames')->where('user_id', $id)->delete();
         DB::table('countries')->where('user_id', $id)->delete();
@@ -54,6 +59,6 @@ class AdminUsersManageController extends Controller
         DB::table('shops')->where('user_id', $id)->delete();
         DB::table('users')->where('id', $id)->delete();
 
-        return redirect();
+        return redirect('/');
     }
 }

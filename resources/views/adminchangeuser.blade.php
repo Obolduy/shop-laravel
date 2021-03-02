@@ -9,7 +9,7 @@
     <p>Страна: <input type="text" name="country" value="{{$elem->country}}"></p>
     <p>Округ\область\штат\республика\etc: <input type="text" name="state" value="{{$elem->state}}"></p>
     <p>Город: <input type="text" name="city" value="{{$elem->city}}"></p>
-    <p>Район: <input type="text" name="dictrict" value="{{$elem->district}}"></p>
+    <p>Район: <input type="text" name="district" value="{{$elem->district}}"></p>
     <p>Улица: <input type="text" name="street" value="{{$elem->street}}"></p>
     <p>Дом: <input type="text" name="house" value="{{$elem->house}}"></p>
     <p><input type="submit" name="submit"></p>

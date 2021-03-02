@@ -3,8 +3,8 @@
 <form method="POST">
     @csrf
     <p>Название: <input type="text" name="lot_name" value="{{$elem->lot_name}}"></p>
-    <p>Название: <input type="text" name="count" value="{{$elem->count}}"></p>
-    <p>Название: <input type="text" name="price" value="{{$elem->price}}"></p>
+    <p>Количество: <input type="text" name="count" value="{{$elem->count}}"></p>
+    <p>Цена: <input type="text" name="price" value="{{$elem->price}}"></p>
     <p>Описание: <textarea name="lot_description">{{$elem->lot_description}}</textarea></p>
     <p><input type="submit" name="submit"></p>
 </form>
