@@ -17,7 +17,7 @@ use App\Http\Controllers\AdminShopsManageController;
 use App\Http\Controllers\AdminLotsManageController;
 use App\Http\Controllers\AdminReviewsManageController;
 
-Route::get('/', [MainController::class, 'main']);//
+Route::get('/', [MainController::class, 'main']);
 
 Route::match(['get', 'post'], '/login', [LoginController::class, 'login'])->name('login');
 
