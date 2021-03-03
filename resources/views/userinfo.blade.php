@@ -5,9 +5,9 @@
 <p>Email: {{$elem->email}} @if(!Auth::user()->email_verified_at) <i>(Не подтвержден)</i> @endif</p>
 <p>Имя: {{$elem->name}}</p>
 <p>Фамилия: {{$elem->surname}}</p>
-<p>Страна: {{$elem->country}}</p>
-<p>Округ\республика\etc: {{$elem->state}}</p>
-<p>Город: {{$elem->city}}</p>
+<p>Страна: {{$elem->country_name}}</p>
+<p>Округ\республика\etc: {{$elem->region_name}}</p>
+<p>Город: {{$elem->city_name}}</p>
 <p>Район: {{$elem->district}}</p>
 <p>Улица: {{$elem->street}}</p>
 <p>Дом: {{$elem->house}}</p>

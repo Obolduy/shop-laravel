@@ -17,15 +17,15 @@ class UserController extends Controller
         $info = DB::table('users')
                     ->leftJoin('names', 'names.id', '=', 'users.name_id')
                     ->leftJoin('surnames', 'surnames.id', '=', 'users.surname_id')
-                    ->leftJoin('countries', 'countries.id', '=', 'users.country_id')
-                    ->leftJoin('states', 'states.id', '=', 'users.state_id')
-                    ->leftJoin('cities', 'cities.id', '=', 'users.city_id')
+                    ->leftJoin('country', 'country.id', '=', 'users.country_id')
+                    ->leftJoin('region', 'region.id', '=', 'users.state_id')
+                    ->leftJoin('city', 'city.id', '=', 'users.city_id')
                     ->leftJoin('districts', 'districts.id', '=', 'users.district_id')
                     ->leftJoin('streets', 'streets.id', '=', 'users.street_id')
                     ->leftJoin('houses', 'houses.id', '=', 'users.house_id')
                     ->leftJoin('shops', 'shops.id', '=', 'users.shop_id')
                     ->select('users.login', 'users.email', 'users.email_verified_at', 'users.photo', 'names.name',
-                             'surnames.surname', 'countries.country', 'states.state', 'cities.city', 'districts.district',
+                             'surnames.surname', 'country.country_name', 'region.region_name', 'city.city_name', 'districts.district',
                              'streets.street', 'houses.house', 'shops.shop_name')
                     ->where('users.id', '=', Auth::id())
                     ->get();

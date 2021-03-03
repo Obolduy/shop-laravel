@@ -18,7 +18,7 @@ class VerifyEmailCheck
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user()->email_verified_at === null) {
-            return view('verifyemail');
+            return redirect()->route('verification.notice');
         }
 
         return $next($request);

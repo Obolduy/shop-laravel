@@ -24,6 +24,10 @@ Route::match(['get', 'post'], '/login', [LoginController::class, 'login'])->name
 
 Route::match(['get', 'post'], '/registration', [RegistrationController::class, 'registration'])->name('registration');
 
+Route::match(['get', 'post'], '/registration/state', [RegistrationController::class, 'registrationstate'])->name('registration.state');
+
+Route::match(['get', 'post'], '/registration/city', [RegistrationController::class, 'registrationcity'])->name('registration.city');
+
 Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth');
 
 Route::match(['get', 'post'], '/reset-password', [PasswordResetController::class, 'resetrequest'])->name('password.request');
