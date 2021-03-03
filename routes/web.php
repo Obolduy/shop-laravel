@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistrationController;
@@ -25,15 +26,19 @@ Route::match(['get', 'post'], '/registration', [RegistrationController::class, '
 
 Route::get('/logout', [LoginController::class, 'logout']);
 
-Route::match(['get', 'post'], '/reset-password', [PasswordResetController::class, 'resetrequest']);//
+Route::match(['get', 'post'], '/reset-password', [PasswordResetController::class, 'resetrequest'])->name('password.request');
 
-Route::match(['get', 'post'], '/reset-password/{token}', [PasswordResetController::class, 'reset']);//
+Route::match(['get', 'post'], '/reset-password/{token}', [PasswordResetController::class, 'reset'])->name('password.reset');
+
+Route::get('/email/verify', function () {
+    return view('verifyemail');
+})->name('verification.notice');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
 
     return redirect('/');
-})->middleware(['auth', 'signed'])->name('verification.verify');//
+})->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::get('/catalog/all', [CategoryController::class, 'showall']);
 

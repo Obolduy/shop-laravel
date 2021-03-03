@@ -113,7 +113,8 @@ class UserController extends Controller
           //  if ($request->hasFile('photo')) {
                //
            // } else {
-                DB::update("update users set login = ?, email = ? where id = ?", [$request->login, $request->email, Auth::id()]);
+                DB::update("update users set login = ?, email = ?, updated_at = ? where id = ?",
+                    [$request->login, $request->email, now(), Auth::id()]);
            // }
 
             return redirect("/profile");

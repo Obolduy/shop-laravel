@@ -6,5 +6,6 @@
     <p><input type="checkbox" name="remember" value="1">Запомнить меня</p>
     <p><input type="submit" name="submit"></p>
 </form>
+<p><a href="/reset-password">Забыли пароль?</a></p>
 @endsection
 @include('layout')
