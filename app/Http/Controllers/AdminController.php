@@ -13,8 +13,8 @@ class AdminController extends Controller
             return view('adminlogin');
         }
         
-        if (password_verify($request->password, '123')) {
-            return redirect('/admin');
+        if ($request->password === 123) {
+            return redirect()->route('adminmain');
         }
     }
 
