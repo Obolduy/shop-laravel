@@ -1,5 +1,7 @@
+# Array of images in lots
+# Lot`s adding via cache
 # Admin change user(Country, region, city)
 # Bans
-# Array of images in lots
-# Middleware that checking registration progress
+# Middleware that checking registration
+# Middleware that checking user`s shop
 # Smth else...

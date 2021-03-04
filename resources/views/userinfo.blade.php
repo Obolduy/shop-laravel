@@ -16,6 +16,7 @@
 @if(Auth::user()->status_id !== 1)<p><a href="/admin">Панель администратора</a></p>@endif
 <p><a href="/profile/change">Изменить данные</a></p>
 <p><a href="/profile/delete">Удалить профиль</a></p>
+<p><a href="/create-shop">Создать магазин</a></p>
 <p><a href="/profile/my_shop">Мой магазин</a></p>
 <p><a href="/profile/my_reviews">Мои отзывы</a></p>
 @endsection

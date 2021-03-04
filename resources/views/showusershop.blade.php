@@ -12,5 +12,5 @@
    </tr>
   @endforeach
 </table>
+<p><a href="/addlot/start">Добавить лот</a></p>
 <p><a href="/myshop/change">Изменить</a></p>
-<!--<p><a href="/myshop/change">Изменить</a></p>-->

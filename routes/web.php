@@ -8,6 +8,7 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LotController;
+use App\Http\Controllers\AddLotController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
@@ -82,6 +83,12 @@ Route::middleware(['auth', 'emailcheck'])->group(function () {
     Route::match(['get', 'post'], '/myshop/{shop}/manage_lots/{lot_id}', [LotController::class, 'editlot']);
 
     Route::match(['get', 'post'], '/myshop/{shop}/delete', [ShopController::class, 'deleteshop']);
+
+    Route::match(['get', 'post'], '/addlot/start', [AddLotController::class, 'chosecategory']);
+
+    Route::match(['get', 'post'], '/addlot/continue', [AddLotController::class, 'chosesubcategory'])->name('addlot.subcategory');
+
+    Route::match(['get', 'post'], '/addlot/finish', [AddLotController::class, 'addlot'])->name('addlot.finish');
 });
 
 Route::get('/shops/{shop_name}', [ShopController::class, 'showothershop']);
