@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Auth\Events\Registered;
 
 class RegistrationController extends Controller
@@ -34,6 +35,13 @@ class RegistrationController extends Controller
         $user = DB::select('select id from users where login = ?', [htmlspecialchars($request->login)]);
         
         foreach ($user as $user_id) {
+            if ($request->hasFile('photo')) {
+                $rawphoto = Storage::put('public/avatars', $request->photo);
+                $photo = preg_replace('#public/avatars/#', '', $rawphoto);
+    
+                DB::update('update users set photo = ? where id = ?', [$photo, $user_id->id]);
+            }
+
             DB::insert('insert into names (name, user_id) values (?, ?)', [htmlspecialchars($request->name), $user_id->id]);
             DB::insert('insert into surnames (surname, user_id) values (?, ?)', [htmlspecialchars($request->surname), $user_id->id]);
         }

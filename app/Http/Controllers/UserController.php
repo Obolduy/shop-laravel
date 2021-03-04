@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -94,12 +95,22 @@ class UserController extends Controller
                 DB::update("update users set password = ? where id = ?", [$password, Auth::id()]);
             }
 
-          //  if ($request->hasFile('photo')) {
-               //
-           // } else {
+            if ($request->hasFile('photo')) {
+                $user = DB::select('select photo from users where id = ?', [Auth::id()]);
+
+                foreach ($user as $id) {
+                    Storage::delete("public/avatars/$id->photo");
+                }
+
+                $rawphoto = Storage::put('public/avatars', $request->photo);
+                $photo = preg_replace('#public/avatars/#', '', $rawphoto);
+
+                DB::update("update users set login = ?, email = ?, photo = ?, updated_at = ? where id = ?",
+                    [htmlspecialchars($request->login), htmlspecialchars($request->email), $photo, now(), Auth::id()]);
+            } else {
                 DB::update("update users set login = ?, email = ?, updated_at = ? where id = ?",
                     [htmlspecialchars($request->login), htmlspecialchars($request->email), now(), Auth::id()]);
-           // }
+            }
 
             return redirect("/profile");
         }

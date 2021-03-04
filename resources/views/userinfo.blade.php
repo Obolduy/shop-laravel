@@ -1,7 +1,7 @@
 @section('main_section')
 @foreach($info as $elem)
 <p>Логин: {{$elem->login}}</p>
-<p>Аватар: {{$elem->photo}}</p>
+<p>Аватар: <img src="{{asset('storage/avatars/'.Auth::user()->photo)}}" alt="Аватар отсутствует" width="189" height="255"></p>
 <p>Email: {{$elem->email}} @if(!Auth::user()->email_verified_at) <i>(Не подтвержден)</i> @endif</p>
 <p>Имя: {{$elem->name}}</p>
 <p>Фамилия: {{$elem->surname}}</p>

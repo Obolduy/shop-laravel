@@ -9,10 +9,11 @@
     </div>
 @endif
 Указывайте Ваш Адрес корректно, его нельзя будет изменить
-<form method="POST">
+<form enctype="multipart/form-data" method="POST">
     @csrf
     <p>Логин: <input type="text" name="login"></p>
     <p>Email: <input type="text" name="email"></p>
+    <p>Загрузите Ваш аватар (Необязательно): <input type="file" accept="image/*" name="photo"></p>
     <p>Пароль: <input type="password" name="password"></p>
     <p>Подтвердите пароль: <input type="password" name="confirm_password"></p>
     <p>Имя: <input type="text" name="name"></p>
