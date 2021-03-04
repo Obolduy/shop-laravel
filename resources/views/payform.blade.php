@@ -11,9 +11,9 @@
 @foreach($user_info as $user)
 <form method="POST">
     @csrf
-    <p>Страна: <input type="text" name="country" value="{{$user->country}}"></p>
-    <p>Округ\область\штат\республика\etc: <input type="text" name="state" value="{{$user->state}}"></p>
-    <p>Город: <input type="text" name="city" value="{{$user->city}}"></p>
+    <p>Страна: <input type="text" name="country" value="{{$user->country_name}}"></p>
+    <p>Округ\область\штат\республика\etc: <input type="text" name="state" value="{{$user->region_name}}"></p>
+    <p>Город: <input type="text" name="city" value="{{$user->city_name}}"></p>
     <p>Район: <input type="text" name="district" value="{{$user->district}}"></p>
     <p>Улица: <input type="text" name="street" value="{{$user->street}}"></p>
     <p>Дом: <input type="text" name="house" value="{{$user->house}}"></p>

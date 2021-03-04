@@ -13,8 +13,13 @@ class AdminController extends Controller
             return view('adminlogin');
         }
         
-        if ($request->password === 123) {
+        if ($request->password == '123') {
+            
+            $request->session()->put(['adminauth' => 1]);
+
             return redirect()->route('adminmain');
+        } else {
+            echo 'efff';
         }
     }
 

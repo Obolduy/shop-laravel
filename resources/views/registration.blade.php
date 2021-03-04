@@ -8,6 +8,7 @@
         </ul>
     </div>
 @endif
+Указывайте Ваш Адрес корректно, его нельзя будет изменить
 <form method="POST">
     @csrf
     <p>Логин: <input type="text" name="login"></p>
@@ -17,7 +18,7 @@
     <p>Имя: <input type="text" name="name"></p>
     <p>Фамилия: <input type="text" name="surname"></p>
     <p>Страна: <select name="country">@foreach ($countries as $country) <option value="{{$country->id}}">{{$country->country_name}}</option>@endforeach</select></p>
-    <p><input type="submit" name="submit"></p>
+    <p><input type="submit" name="submit" value="Дальше"></p>
 </form>
 @endsection
 @include('layout')

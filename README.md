@@ -1,3 +1,3 @@
-# Change user
 # Avatar
+# Admin change user(Country, region, city)
 # Smth else...

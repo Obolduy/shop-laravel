@@ -61,14 +61,14 @@ class CartController extends Controller
             $user_info = DB::table('users')
                     ->join('names', 'names.id', '=', 'users.name_id')
                     ->join('surnames', 'surnames.id', '=', 'users.surname_id')
-                    ->join('countries', 'countries.id', '=', 'users.country_id')
-                    ->join('states', 'states.id', '=', 'users.state_id')
-                    ->join('cities', 'cities.id', '=', 'users.city_id')
+                    ->join('country', 'country.id', '=', 'users.country_id')
+                    ->join('region', 'region.id', '=', 'users.state_id')
+                    ->join('city', 'city.id', '=', 'users.city_id')
                     ->join('districts', 'districts.id', '=', 'users.district_id')
                     ->join('streets', 'streets.id', '=', 'users.street_id')
                     ->join('houses', 'houses.id', '=', 'users.house_id')
                     ->select('users.login', 'users.email', 'users.photo', 'names.name',
-                             'surnames.surname', 'countries.country', 'states.state', 'cities.city', 'districts.district',
+                             'surnames.surname', 'country.country_name', 'region.region_name', 'city.city_name', 'districts.district',
                              'streets.street', 'houses.house')
                     ->where('users.id', '=', Auth::id())
                     ->get();

@@ -7,7 +7,7 @@
     <title>Магазинчик</title>
 </head>
 <body>
-    <header> @if (session('auth'))<p><a href="/logout">Выйти</a></p><p><a href="/profile">{{ Auth::user()->login }}</a></p>@else <p><a href="/registration">Зарегистрируйтесь</a> или <a href="/login">Войдите</a></p> @endif </header>
+    <header> @if (session('auth'))<p><a href="/logout">Выйти</a></p><p><a href="/profile">{{ Auth::user()->login }}</a></p>@else <p><a href="/registration">Зарегистрируйтесь</a> или <a href="/login">Войдите</a></p> @endif <p><a href="/cart">Корзина</a></p></header>
     
     @yield('main_section')
     

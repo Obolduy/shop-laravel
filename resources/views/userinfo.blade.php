@@ -13,6 +13,7 @@
 <p>Дом: {{$elem->house}}</p>
 <p>Магазин: @if(Auth::user()->shop_id) {{$elem->shop_name}} @else <i>Отсутствует</i> @endif</p>
 @endforeach
+@if(Auth::user()->status_id !== 1)<p><a href="/admin">Панель администратора</a></p>@endif
 <p><a href="/profile/change">Изменить данные</a></p>
 <p><a href="/profile/delete">Удалить профиль</a></p>
 <p><a href="/profile/my_shop">Мой магазин</a></p>
