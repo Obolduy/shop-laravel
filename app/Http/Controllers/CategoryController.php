@@ -27,8 +27,6 @@ class CategoryController extends Controller
         [$category_id, $subcategory_id]);
         
         return view('showsubcategorylots', ['lots' => $lots]);
-
-        // починить отображение
     }
 
     public function showshoplots($shop)

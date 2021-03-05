@@ -83,11 +83,11 @@ class UserController extends Controller
         ]);
 
         if (password_verify($request->password, Auth::user()->password)) {
-            DB::update("update names set name = ? where user_id = ?", [htmlspecialchars($request->name), Auth::id()]);
-            DB::update("update surnames set surname = ? where user_id = ?", [htmlspecialchars($request->surname), Auth::id()]);
-            DB::update("update districts set district = ? where user_id = ?", [htmlspecialchars($request->district), Auth::id()]);
-            DB::update("update streets set street = ? where user_id = ?", [htmlspecialchars($request->street), Auth::id()]);
-            DB::update("update houses set house = ? where user_id = ?", [htmlspecialchars($request->house), Auth::id()]);
+            DB::update("update names set name = ? where user_id = ?", [strip_tags($request->name), Auth::id()]);
+            DB::update("update surnames set surname = ? where user_id = ?", [strip_tags($request->surname), Auth::id()]);
+            DB::update("update districts set district = ? where user_id = ?", [strip_tags($request->district), Auth::id()]);
+            DB::update("update streets set street = ? where user_id = ?", [strip_tags($request->street), Auth::id()]);
+            DB::update("update houses set house = ? where user_id = ?", [strip_tags($request->house), Auth::id()]);
 
             if (!empty($request->new_password)) {
                 $password = Hash::make($request->new_password);
@@ -106,10 +106,10 @@ class UserController extends Controller
                 $photo = preg_replace('#public/avatars/#', '', $rawphoto);
 
                 DB::update("update users set login = ?, email = ?, photo = ?, updated_at = ? where id = ?",
-                    [htmlspecialchars($request->login), htmlspecialchars($request->email), $photo, now(), Auth::id()]);
+                    [strip_tags($request->login), strip_tags($request->email), $photo, now(), Auth::id()]);
             } else {
                 DB::update("update users set login = ?, email = ?, updated_at = ? where id = ?",
-                    [htmlspecialchars($request->login), htmlspecialchars($request->email), now(), Auth::id()]);
+                    [strip_tags($request->login), strip_tags($request->email), now(), Auth::id()]);
             }
 
             return redirect("/profile");

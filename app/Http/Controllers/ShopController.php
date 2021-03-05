@@ -27,7 +27,7 @@ class ShopController extends Controller
         ]);
 
         DB::insert('insert into shops (shop_name, shop_description, user_id, showing, created_at, updated_at) values (?, ?, ?, ?, ?, ?)',
-            [htmlspecialchars($request->shop_name), htmlspecialchars($request->shop_description), Auth::id(), 1, now(), now()]);
+            [strip_tags($request->shop_name), strip_tags($request->shop_description), Auth::id(), 1, now(), now()]);
 
         $user_shop = DB::select('select id from shops where shop_name = ?', [$request->shop_name]);
         
@@ -47,7 +47,7 @@ class ShopController extends Controller
         }
 
         DB::update('update shops set shop_name = ?, shop_description = ?, showing = ?, updated_at = ? where user_id = ?',
-            [htmlspecialchars($request->shop_name), htmlspecialchars($request->shop_description),
+            [strip_tags($request->shop_name), strip_tags($request->shop_description),
                 $request->showing, now(), Auth::id()]);
 
         return redirect('/profile/my_shop');

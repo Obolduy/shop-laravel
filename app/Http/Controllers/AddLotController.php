@@ -5,13 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
 
 class AddLotController extends Controller
 {
-    public $category;
-    public $subcategory;
-
     public function chosecategory(Request $request)
     {
         if ($request->isMethod('get')) {
@@ -19,49 +17,50 @@ class AddLotController extends Controller
 
             return view('addlotstart', ['categories' => $categories]);
         }
+        Redis::set('category_id', $request->category);
 
-        $this->category = $request->category;
-
-        return $this->chosesubcategory($request);
+        return redirect()->route('addlot.subcategory');
     }
 
     public function chosesubcategory(Request $request)
     {
-        $subcategories = DB::select('select id, subcategory from subcategories where category_id = ?', [$this->category]);
+        if ($request->isMethod('get')) {
+            $subcategories = DB::select('select id, subcategory from subcategories where category_id = ?', [Redis::get('category_id')]);
 
-        return view('addlotcontinue', ['subcategories' => $subcategories]);
-
-        if ($request->isMethod('post')) {
-            $this->subcategory = $request->subcategory;
+            return view('addlotcontinue', ['subcategories' => $subcategories]);
         }
-        $this->addlot($request);
+
+        Redis::set('subcategory_id', $request->subcategory);
+
+        return redirect()->route('addlot.finish');
     }
 
     public function addlot(Request $request)
     {
-        return view('addlotcomplete');
+        if ($request->isMethod('get')) {
+            return view('addlotcomplete');
+        }
 
-        if ($request->isMethod('post')) {
-            DB::insert('insert into lots (lot_name, lot_description, shop_id, category_id, subcategory_id, price, count) 
-                values (?, ?, ?, ?, ?, ?, ?)',
-                    [htmlspecialchars($request->lot_name), htmlspecialchars($request->lot_description), Auth::user()->shop_id,
-                        $this->category, $this->subcategory,
-                            htmlspecialchars($request->price), htmlspecialchars($request->count)]);
-            
-            if ($request->hasFile('photo')) {
-                $lot = DB::select('select id from lots where lot_name = ?, shop_id = ?',
-                    [htmlspecialchars($request->lot_name), Auth::user()->shop_id]);
-
-                foreach($lot as $elem) {
-                    for($i = 1; $i < $request->photo; $i++) {
-                        $rawphoto = Storage::put('public/lots_images', $request->photo[$i]);
-                        $photo = preg_replace('#public/lots_images/#', '', $rawphoto);
+        DB::insert('insert into lots (lot_name, lot_description, shop_id, category_id, subcategory_id, price, count) 
+            values (?, ?, ?, ?, ?, ?, ?)',
+                [strip_tags($request->lot_name), strip_tags($request->lot_description), Auth::user()->shop_id,
+                    Redis::get('category_id'), Redis::get('subcategory_id'),
+                        strip_tags($request->price), strip_tags($request->count)]);
         
-                        DB::insert('insert into lots_pictures (lot_id, picture) values (?, ?)', [$elem->id, $photo]);
-                    }
+        if ($request->hasFile('photo')) {
+            $lot = DB::select('select id from lots where lot_name = ? and shop_id = ?',
+                [strip_tags($request->lot_name), Auth::user()->shop_id]);
+
+            foreach($lot as $elem) {
+                for($i = 0; $i < count($request->photo); $i++) {
+                    $rawphoto = Storage::put('public/lots_images', $request->photo[$i]);
+                    $photo = preg_replace('#public/lots_images/#', '', $rawphoto);
+    
+                    DB::insert('insert into lots_pictures (lot_id, picture) values (?, ?)', [$elem->id, $photo]);
                 }
             }
         }
+        Redis::del('category_id, subcategory_id');
 
         return redirect('/');
     }

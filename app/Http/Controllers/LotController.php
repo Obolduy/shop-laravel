@@ -34,8 +34,8 @@ class LotController extends Controller
             }
 
             DB::update('update lots set lot_name = ?, count = ?, lot_description = ?, price = ? where id = ?',
-                [htmlspecialchars($request->name), htmlspecialchars($request->count),
-                htmlspecialchars($request->description), htmlspecialchars($request->price), htmlspecialchars($lot_id)]);
+                [strip_tags($request->name), strip_tags($request->count),
+                strip_tags($request->description), strip_tags($request->price), strip_tags($lot_id)]);
 
             return redirect('/');
         }

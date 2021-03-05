@@ -29,10 +29,10 @@ class RegistrationController extends Controller
         ]);
 
         DB::insert('insert into users (login, password, email, country_id, registration_time, status_id, ban_id)
-                values (?, ?, ?, ?, ?, ?, ?)', [htmlspecialchars($request->login), Hash::make($request->password),
-                    htmlspecialchars($request->email), $request->country, now(), 1, 0]);
+                values (?, ?, ?, ?, ?, ?, ?)', [strip_tags($request->login), Hash::make($request->password),
+                    strip_tags($request->email), $request->country, now(), 1, 0]);
 
-        $user = DB::select('select id from users where login = ?', [htmlspecialchars($request->login)]);
+        $user = DB::select('select id from users where login = ?', [strip_tags($request->login)]);
         
         foreach ($user as $user_id) {
             if ($request->hasFile('photo')) {
@@ -42,8 +42,8 @@ class RegistrationController extends Controller
                 DB::update('update users set photo = ? where id = ?', [$photo, $user_id->id]);
             }
 
-            DB::insert('insert into names (name, user_id) values (?, ?)', [htmlspecialchars($request->name), $user_id->id]);
-            DB::insert('insert into surnames (surname, user_id) values (?, ?)', [htmlspecialchars($request->surname), $user_id->id]);
+            DB::insert('insert into names (name, user_id) values (?, ?)', [strip_tags($request->name), $user_id->id]);
+            DB::insert('insert into surnames (surname, user_id) values (?, ?)', [strip_tags($request->surname), $user_id->id]);
         }
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
@@ -77,9 +77,9 @@ class RegistrationController extends Controller
             return view('registrationcity', ['cities' => $cities]);
         }
         
-        DB::insert('insert into districts (district, user_id) values (?, ?)', [htmlspecialchars($request->district), Auth::id()]);
-        DB::insert('insert into streets (street, user_id) values (?, ?)', [htmlspecialchars($request->street), Auth::id()]);
-        DB::insert('insert into houses (house, user_id) values (?, ?)', [htmlspecialchars($request->house), Auth::id()]);
+        DB::insert('insert into districts (district, user_id) values (?, ?)', [strip_tags($request->district), Auth::id()]);
+        DB::insert('insert into streets (street, user_id) values (?, ?)', [strip_tags($request->street), Auth::id()]);
+        DB::insert('insert into houses (house, user_id) values (?, ?)', [strip_tags($request->house), Auth::id()]);
         DB::update('update users set city_id = ? where id = ?', [$request->city, Auth::id()]);
 
         $data = DB::table('users')
