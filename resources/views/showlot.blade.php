@@ -4,7 +4,7 @@
 @foreach($picture as $pic)
 <p><img src="{{asset('storage/lots_images/'.$pic->picture)}}" alt="Картинки отсутствуют" width="189" height="255"></p>
 @endforeach
-<p>{{$elem->lot_description}}</p>
+<p>@php echo nl2br($elem->lot_description) @endphp</p>
 <p>{{$elem->price}}</p>
 <p>{{$elem->count}}</p>
 <p><i>{{$elem->created_at}}</i></p>

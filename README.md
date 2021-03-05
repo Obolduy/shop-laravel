@@ -1,5 +1,2 @@
-# Admin change user(Country, region, city)
-# Bans
-# Middleware that checking registration
-# Middleware that checking user`s shop
+# Admin change user(Country, region, city, ban)
 # Smth else...
