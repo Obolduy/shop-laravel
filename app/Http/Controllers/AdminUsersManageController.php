@@ -14,15 +14,11 @@ class AdminUsersManageController extends Controller
         $user = DB::table('users')
                     ->leftJoin('names', 'names.id', '=', 'users.name_id')
                     ->leftJoin('surnames', 'surnames.id', '=', 'users.surname_id')
-                    ->leftJoin('countries', 'countries.id', '=', 'users.country_id')
-                    ->leftJoin('states', 'states.id', '=', 'users.state_id')
-                    ->leftJoin('cities', 'cities.id', '=', 'users.city_id')
                     ->leftJoin('districts', 'districts.id', '=', 'users.district_id')
                     ->leftJoin('streets', 'streets.id', '=', 'users.street_id')
                     ->leftJoin('houses', 'houses.id', '=', 'users.house_id')
                     ->select('users.login', 'users.email', 'users.email_verified_at', 'users.photo', 'names.name',
-                             'surnames.surname', 'countries.country', 'states.state', 'cities.city', 'districts.district',
-                             'streets.street', 'houses.house', 'users.id')
+                             'surnames.surname', 'districts.district', 'streets.street', 'houses.house', 'users.id')
                     ->where('users.id', '=', $id)
                     ->get();
         
@@ -32,9 +28,6 @@ class AdminUsersManageController extends Controller
 
         DB::update("update names set name = ? where user_id = ?", [$request->name, $id]);
         DB::update("update surnames set surname = ? where user_id = ?", [$request->surname, $id]);
-        DB::update("update countries set country = ? where user_id = ?", [$request->country, $id]);
-        DB::update("update states set state = ? where user_id = ?", [$request->state, $id]);
-        DB::update("update cities set city = ? where user_id = ?", [$request->city, $id]);
         DB::update("update districts set district = ? where user_id = ?", [$request->district, $id]);
         DB::update("update streets set street = ? where user_id = ?", [$request->street, $id]);
         DB::update("update houses set house = ? where user_id = ?", [$request->house, $id]);

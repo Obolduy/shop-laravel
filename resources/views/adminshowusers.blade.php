@@ -10,7 +10,7 @@
       <th>Имя</th>
       <th>Фамилия</th>
       <th>Страна</th>
-      <th>Республика\округ\край и так далее</th>
+      <th>Регион</th>
       <th>Город</th>
       <th>Район</th>
       <th>Улица</th>
@@ -23,9 +23,9 @@
         <td>{{ $user->email }}</td>
         <td>{{ $user->name }}</td>
         <td>{{ $user->surname }}</td>
-        <td>{{ $user->country }}</td>
-        <td>{{ $user->state }}</td>
-        <td>{{ $user->city }}</td>
+        <td>{{ $user->country_name }}</td>
+        <td>{{ $user->region_name }}</td>
+        <td>{{ $user->city_name }}</td>
         <td>{{ $user->district }}</td>
         <td>{{ $user->street }}</td>
         <td>{{ $user->house }}</td>

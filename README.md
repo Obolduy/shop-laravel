@@ -1,2 +1,7 @@
-# Admin change user(Country, region, city, ban)
-# Smth else...
+# Оформление
+# Подгон миграции под фактическую БД
+# Редактироване пользователей(Страны, регионы, города)
+
+// Cache: Redis
+// DB: MySQL
+// Mail: MailTrap

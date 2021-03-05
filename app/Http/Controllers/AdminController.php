@@ -28,14 +28,14 @@ class AdminController extends Controller
         $users = DB::table('users')
                 ->leftJoin('names', 'names.user_id', '=', 'users.id')
                 ->leftJoin('surnames', 'surnames.user_id', '=', 'users.id')
-                ->leftJoin('countries', 'countries.id', '=', 'users.country_id')
-                ->leftJoin('states', 'states.id', '=', 'users.state_id')
-                ->leftJoin('cities', 'cities.id', '=', 'users.city_id')
+                ->leftJoin('country', 'country.id', '=', 'users.country_id')
+                ->leftJoin('region', 'region.id', '=', 'users.state_id')
+                ->leftJoin('city', 'city.id', '=', 'users.city_id')
                 ->leftJoin('districts', 'districts.id', '=', 'users.district_id')
                 ->leftJoin('streets', 'streets.id', '=', 'users.street_id')
                 ->leftJoin('houses', 'houses.id', '=', 'users.house_id')
                 ->select('users.login', 'users.email', 'users.id', 'names.name', 'surnames.surname',
-                    'countries.country', 'states.state', 'cities.city', 'districts.district',
+                    'country.country_name', 'region.region_name', 'city.city_name', 'districts.district',
                     'streets.street', 'houses.house', 'users.registration_time')
                 ->get();
 
