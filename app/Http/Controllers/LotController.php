@@ -11,13 +11,15 @@ class LotController extends Controller
     public function showlot($category_id, $subcategory_id, $lot_id)
     {
         $lot = DB::select('select * from lots where id = ?', [$lot_id]);
+        $picture = DB::select('select picture from lots_pictures where lot_id = ?', [$lot_id]);
 
         $reviews = DB::table('reviews')
                     ->join('users', 'users.id', '=', 'reviews.user_id')
                     ->select('users.login', 'reviews.title', 'reviews.text', 'reviews.created_at')
-                    ->where('reviews.lot_id', '=', $lot_id)->get();
+                    ->where('reviews.lot_id', '=', $lot_id)
+                    ->get();
 
-        return view('showlot', ['lot' => $lot, 'reviews' => $reviews]);
+        return view('showlot', ['lot' => $lot, 'picture' => $picture, 'reviews' => $reviews]);
     }
 
     public function editlot($shop, $lot_id, Request $request)

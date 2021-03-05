@@ -1,6 +1,9 @@
 @section('main_section')
 @foreach($lot as $elem)
 <p><b>{{$elem->lot_name}}</b></p>
+@foreach($picture as $pic)
+<p><img src="{{asset('storage/lots_images/'.$pic->picture)}}" alt="Картинки отсутствуют" width="189" height="255"></p>
+@endforeach
 <p>{{$elem->lot_description}}</p>
 <p>{{$elem->price}}</p>
 <p>{{$elem->count}}</p>
