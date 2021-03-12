@@ -4,19 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ asset('style/style.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
     <title>Магазинчик</title>
 </head>
 <body>
     <header>
-        @if (session('auth'))
-        <div class="logout">
-            <a href="/logout">Выйти</a>
-        </div>
-            <div class="profile">
-                <a href="/profile">{{ Auth::user()->login }}</a>
-            </div>
-        @else
         <div class="auth">
             <div class="reg-btn">
                 <form action="/registration">
@@ -29,7 +21,6 @@
                 </form>
             </div>
         </div>
-        @endif
         <div class="title">
             Магазин «Magazine»
         </div>
@@ -41,11 +32,31 @@
             </div>
         </div>
     </header>
-    
     <div class="main">
-        @yield('main_section')
+        <nav>
+            <ul>
+                <li>Надпись 1</li>
+                <li>Надпись 2</li>
+                <li>Надпись 3</li>
+                <li>Надпись 4</li>
+                <li>Надпись 5</li>
+                <li>Надпись 6</li>
+                <li>Надпись 7</li>
+                <li>Надпись 8</li>
+                <li>Надпись 9</li>
+                <li>Надпись 10</li>
+            </ul>
+        </nav>
+        <div class="last-lots">
+            <ul>
+            <div><li><h2>Название товара 1</h2></li></div>
+            <div><li><h2>Название товара 2</h2></li></div>
+            <div><li><h2>Название товара 3</h2></li></div>
+            <div><li><h2>Название товара 4</h2></li></div>
+            <div><li><h2>Название товара 5</h2></li></div>
+            </ul>
+        </div>
     </div>
-    
     <footer><p>Футер</p></footer>
 </body>
 </html>

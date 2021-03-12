@@ -1,8 +1,12 @@
 @section('main_section')
 Новые товары:
-@foreach($lots as $lot)
-<p><a href="/catalog/{{ $lot->category_id }}/{{ $lot->subcategory_id }}/{{ $lot->id }}">{{ $lot->lot_name }}</a></p>
-@endforeach
+<div class="last-lots">
+    <ul>
+    @foreach($lots as $lot)
+    <div><li><h2><a href="/catalog/{{ $lot->category_id }}/{{ $lot->subcategory_id }}/{{ $lot->id }}">{{ $lot->lot_name }}</a></h2></li></div>
+    @endforeach
+    </ul>
+</div>
 <p><a href="/catalog/all">Открыть весь каталог</a></p>
 @endsection
 @include('layout')
