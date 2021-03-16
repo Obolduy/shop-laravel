@@ -1,11 +1,13 @@
 @section('main_section')
-<form method="POST">
-    @csrf
-    <p>Email: <input type="text" name="email"></p>
-    <p>Пароль: <input type="password" name="password"></p>
-    <p><input type="checkbox" name="remember" value="1">Запомнить меня</p>
-    <p><input type="submit" name="submit"></p>
-</form>
-<p><a href="/reset-password">Забыли пароль?</a></p>
+<div class="login__form">
+    <form method="POST">
+        @csrf
+        <div class="email__input">Email: <input type="text" name="email"></div>
+        <div class="password__input">Пароль: <input type="password" name="password"></div>
+        <div class="checkbox__input"><input type="checkbox" name="remember" value="1"> Запомнить меня</div>
+        <div class="submit__input"><input type="submit" name="submit"></div>
+    </form>
+    <div class="password__reset"><a href="/reset-password">Забыли пароль?</a></div>
+</div>
 @endsection
 @include('layout')

@@ -10,12 +10,14 @@
 <p><i>{{$elem->created_at}}</i></p>
 <p><a href="/cart/add/{{$elem->id}}">Добавить в корзину</a></p><br>
 
-<form method="POST" action="/add_review/{{$elem->id}}">
-    @csrf
-    <p>Название отзыва:<input type="text" name="title"></p>
-    <p><textarea name="text"></textarea></p>
-    <p><input type="submit" name="submit"></p>
-</form>
+<div class="addreview__form">
+    <form method="POST" action="/add_review/{{$elem->id}}">
+        @csrf
+        <div class="lotname__input">Название отзыва:<input type="text" name="title"></div>
+        <div class="lottext__input"><textarea name="text"></textarea></div>
+        <div class="submit__input"><input type="submit" name="submit"></div>
+    </form>
+</div>
 @endforeach
 @foreach($reviews as $review)
 <p><b>{{$review->title}}</b></p>

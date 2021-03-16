@@ -1,9 +1,11 @@
 @section('main_section')
-<form method="POST">
-    @csrf
-    <p>Название магазина: <input type="text" name="shop_name"></p>
-    <p>Описание магазина: <textarea name="shop_description"></textarea></p>
-    <p><input type="submit" name="submit"></p>
-</form>
+<div class="createshop__form">
+    <form method="POST">
+        @csrf
+        <div class="shopname__input">Название магазина: <input type="text" name="shop_name"></div>
+        <div class="shopdesc__input">Описание магазина: <textarea name="shop_description"></textarea></div>
+        <div class="submit__input"><input type="submit" name="submit"></div>
+    </form>
+</div>
 @endsection
 @include('layout')

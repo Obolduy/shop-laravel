@@ -61,7 +61,7 @@
   .main {
     padding: 7px;
     min-height: 100%;
-    background-color: rgb(4, 75, 8);
+    background-color: rgb(43, 4, 75);
     color: rgb(255, 255, 255);
   }
   header {
@@ -115,10 +115,14 @@
   }
   nav {
     float: left;
+    border: 2px solid rgb(169, 143, 196);
+    border-radius: 5px;
+    padding: 4px;
+    font-size: 27px;
   }
   .last-lots {
     position: relative;
-    left: 33%;
+    left: 36%;
     width: 55%;
   }
   h2 > a {
@@ -128,7 +132,7 @@
     font-weight: 800;
   }
   h2 > a:hover {
-    color: rgb(235, 177, 17);;
+    color: rgb(235, 177, 17);
     text-decoration: underline;
     text-decoration-style: wavy;
     transition-duration: 0.1s;
@@ -137,4 +141,49 @@
     display: flex;
     flex-direction: column;
     line-height: 65px;
+  }
+  nav > ul > li > a {
+    color: rgb(235, 177, 17);
+  }
+  nav > ul > li > a:hover {
+    color: red;
+  }
+  footer {
+    height: 50px;
+    background-color: rgba(43, 4, 75, 0.7);
+    color: rgb(169, 143, 196);
+    border-top: 2px solid rgb(169, 143, 196);
+    font-family: sans-serif;
+  }
+  .footer-text {
+    position: relative;
+    left: 22px;
+    top: 22px;
+  }
+  form {
+    color: rgb(235, 177, 17);
+    font-family: sans-serif;
+  }
+  form > div > input:hover {
+    box-shadow: 0 0 10px rgba(235, 177, 17, 1);
+  }
+  form > div {
+    margin-top: 8px;
+  }
+  form > .submit__input > input {
+    background-color: rgba(43, 4, 75, 0.7);
+    border: 2px solid rgb(169, 143, 196);
+    border-radius: 5px;
+    padding: 2px;
+    color: rgb(169, 143, 196);
+    font-weight: 700;
+    font-family: fantasy, sans-serif;
+    font-size: larger;
+  }
+  .password__reset {
+    margin-top: 15px;
+  }
+  .login__form a{
+    color: red;
+    font-family: sans-serif;
   }

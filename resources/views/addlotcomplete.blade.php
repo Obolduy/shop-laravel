@@ -8,14 +8,16 @@
         </ul>
     </div>
 @endif
-<form enctype="multipart/form-data" method="POST">
+<div class="completelot__form"><form enctype="multipart/form-data" method="POST">
     @csrf
-    <p>Название товара: <input type="text" name="lot_name"></p>
-    <p>Описание товара: <textarea name="lot_description"></textarea></p>
-    <p>Цена: <input type="text" name="price"></p>
-    <p>Изображения товара: <input type="file" accept="image/*" name="photo[]" multiple></p>
-    <p>Количество товара: <input type="text" name="count"></p>
-    <p><input type="submit" name="submit" value="Опубликовать"></p>
+    <div class="lotname__input">Название товара: <input type="text" name="lot_name"></div>
+    <div class="lotdesc__input">Описание товара: <textarea name="lot_description"></textarea></div>
+    <div class="lotprice__input">Цена: <input type="text" name="price"></div>
+    <div class="lotpic__input">Изображения товара: <input type="file" accept="image/*" name="photo[]" multiple></div>
+    <div class="lotcount__input">Количество товара: <input type="text" name="count"></div>
+    <div class="submit__input"><input type="submit" name="submit" value="Опубликовать"></div>
 </form>
+</div>
+    
 @endsection
 @include('layout')

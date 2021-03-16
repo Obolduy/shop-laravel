@@ -1,5 +1,11 @@
 @section('main_section')
-Новые товары:
+<nav>
+    <ul>
+        @foreach($categories as $category)
+        <li><a href="/catalog/{{ $category->id }}/">{{$category->category}}</a></li>
+        @endforeach
+    </ul>
+</nav>
 <div class="last-lots">
     <ul>
     @foreach($lots as $lot)

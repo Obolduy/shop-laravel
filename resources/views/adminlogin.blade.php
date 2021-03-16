@@ -1,8 +1,10 @@
 @section('main_section')
-<form method="POST">
-    @csrf
-    <p>Введите пароль: <input type="password" name="password"></p>
-    <p><input type="submit" name="submit"></p>
-</form>
+<div class="adminlogin">
+    <form method="POST">
+        @csrf
+        <div class="password__input">Введите пароль: <input type="password" name="password"></div>
+        <div class="submit__input"><input type="submit" name="submit"></div>
+    </form>
+</div>
 @endsection
 @include('layout')

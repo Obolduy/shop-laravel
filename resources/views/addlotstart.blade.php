@@ -8,10 +8,12 @@
         </ul>
     </div>
 @endif
-<form method="POST">
-    @csrf
-    <p>Категория: <select name="category">@foreach ($categories as $category) <option value="{{$category->id}}">{{$category->category}}</option>@endforeach</select></p>
-    <p><input type="submit" name="submit" value="Дальше"></p>
-</form>
+<div class="addlot__start">
+    <form method="POST">
+        @csrf
+        <div class="subcategory__input">Категория: <select name="category">@foreach ($categories as $category) <option value="{{$category->id}}">{{$category->category}}</option>@endforeach</select></div>
+        <div class="submit__input"><input type="submit" name="submit" value="Дальше"></div>
+    </form>
+</div>
 @endsection
 @include('layout')

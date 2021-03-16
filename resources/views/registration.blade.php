@@ -11,15 +11,15 @@
 Указывайте Ваш Адрес корректно, его нельзя будет изменить
 <form enctype="multipart/form-data" method="POST">
     @csrf
-    <p>Логин: <input type="text" name="login"></p>
-    <p>Email: <input type="text" name="email"></p>
-    <p>Загрузите Ваш аватар (Необязательно): <input type="file" accept="image/*" name="photo"></p>
-    <p>Пароль: <input type="password" name="password"></p>
-    <p>Подтвердите пароль: <input type="password" name="confirm_password"></p>
-    <p>Имя: <input type="text" name="name"></p>
-    <p>Фамилия: <input type="text" name="surname"></p>
-    <p>Страна: <select name="country">@foreach ($countries as $country) <option value="{{$country->id}}">{{$country->country_name}}</option>@endforeach</select></p>
-    <p><input type="submit" name="submit" value="Дальше"></p>
+    <div class="login__input">Логин: <input type="text" name="login"></div>
+    <div class="email__input">Email: <input type="text" name="email"></div>
+    <div class="avatar__input">Загрузите Ваш аватар (Необязательно): <input type="file" accept="image/*" name="photo"></div>
+    <div class="password__input">Пароль: <input type="password" name="password"></div>
+    <div class="confirmpassword__input">Подтвердите пароль: <input type="password" name="confirm_password"></div>
+    <div class="name__input">Имя: <input type="text" name="name"></div>
+    <div class="lastname__input">Фамилия: <input type="text" name="surname"></div>
+    <div class="country__input">Страна: <select name="country">@foreach ($countries as $country) <option value="{{$country->id}}">{{$country->country_name}}</option>@endforeach</select></div>
+    <div class="submit__input"><input type="submit" name="submit" value="Дальше"></div>
 </form>
 @endsection
 @include('layout')

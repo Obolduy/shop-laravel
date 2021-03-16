@@ -46,6 +46,8 @@
         @yield('main_section')
     </div>
     
-    <footer><p>Футер</p></footer>
+    <footer>
+        <div class="footer-text">Copyright ne-copyrightera 2021©</div>
+    </footer>
 </body>
 </html>

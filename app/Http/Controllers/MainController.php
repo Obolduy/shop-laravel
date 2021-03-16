@@ -15,6 +15,8 @@ class MainController extends Controller
                 ->limit(5)
                 ->get();
 
-        return view('main', ['lots' => $lots]);
+        $categories = DB::select('select * from categories');
+
+        return view('main', ['lots' => $lots, 'categories' => $categories]);
     }
 }
