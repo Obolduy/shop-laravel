@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Auth\Events\Registered;
 
 class RegistrationController extends Controller
@@ -28,43 +29,32 @@ class RegistrationController extends Controller
             'surname' => 'required|max:32|alpha'
         ]);
 
-        DB::insert('insert into users (login, password, email, country_id, registration_time, status_id, ban_id)
-                values (?, ?, ?, ?, ?, ?, ?)', [strip_tags($request->login), Hash::make($request->password),
-                    strip_tags($request->email), $request->country, now(), 1, 0]);
-
-        $user = DB::select('select id from users where login = ?', [strip_tags($request->login)]);
+        Redis::set('login', strip_tags($request->login));
+        Redis::set('password', $request->password);
+        Redis::set('email', strip_tags($request->email));
+        Redis::set('country_id', $request->country);
+        Redis::set('name', strip_tags($request->name));
+        Redis::set('surname', strip_tags($request->surname));
         
-        foreach ($user as $user_id) {
-            if ($request->hasFile('photo')) {
-                $rawphoto = Storage::put('public/avatars', $request->photo);
-                $photo = preg_replace('#public/avatars/#', '', $rawphoto);
-    
-                DB::update('update users set photo = ? where id = ?', [$photo, $user_id->id]);
-            }
+        if ($request->hasFile('photo')) {
+            $rawphoto = Storage::put('public/avatars', $request->photo);
+            $photo = preg_replace('#public/avatars/#', '', $rawphoto);
 
-            DB::insert('insert into names (name, user_id) values (?, ?)', [strip_tags($request->name), $user_id->id]);
-            DB::insert('insert into surnames (surname, user_id) values (?, ?)', [strip_tags($request->surname), $user_id->id]);
+            Redis::set('photo', $photo);
         }
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-
-            $request->session()->regenerate();
-
-            $request->session()->put(['auth' => 1]);
-
-            return redirect()->route('registration.state');
-        }
+        return redirect()->route('registration.state');
     }
 
     public function registrationstate(Request $request)
     {
         if ($request->isMethod('get')) {
-            $regions = DB::select('select id, region_name from region where country_id = ?', [Auth::user()->country_id]);
+            $regions = DB::select('select id, region_name from region where country_id = ?', [Redis::get('country_id')]);
 
             return view('registrationregion', ['regions' => $regions]);
         }
 
-        DB::update('update users set state_id = ? where id = ?', [$request->state, Auth::id()]);
+        Redis::set('state_id', strip_tags($request->state));
 
         return redirect()->route('registration.city');
     }
@@ -72,35 +62,63 @@ class RegistrationController extends Controller
     public function registrationcity(Request $request)
     {
         if ($request->isMethod('get')) {
-            $cities = DB::select('select id, city_name from city where region_id = ?', [Auth::user()->state_id]);
+            $cities = DB::select('select id, city_name from city where region_id = ?', [Redis::get('state_id')]);
 
             return view('registrationcity', ['cities' => $cities]);
         }
-        
-        DB::insert('insert into districts (district, user_id) values (?, ?)', [strip_tags($request->district), Auth::id()]);
-        DB::insert('insert into streets (street, user_id) values (?, ?)', [strip_tags($request->street), Auth::id()]);
-        DB::insert('insert into houses (house, user_id) values (?, ?)', [strip_tags($request->house), Auth::id()]);
-        DB::update('update users set city_id = ? where id = ?', [$request->city, Auth::id()]);
 
-        $data = DB::table('users')
-                    ->join('names', 'names.user_id', '=', 'users.id')
-                    ->join('surnames', 'surnames.user_id', '=', 'users.id')
-                    ->join('districts', 'districts.user_id', '=', 'users.id')
-                    ->join('streets', 'streets.user_id', '=', 'users.id')
-                    ->join('houses', 'houses.user_id', '=', 'users.id')
-                    ->select('names.id as name_id', 'surnames.id as surname_id', 'districts.id as district_id',
-                        'streets.id as street_id', 'houses.id as house_id')
-                    ->where('users.id', '=', Auth::id())
-                    ->get();
+        DB::insert('insert into users (login, password, email, country_id, registration_time, status_id, ban_id, state_id, city_id)
+                values (?, ?, ?, ?, ?, ?, ?, ?, ?)', [Redis::get('login'), Hash::make(Redis::get('password')),
+                    Redis::get('email'), Redis::get('country_id'), now(), 1, 0, Redis::get('state_id'), $request->city]);
 
-        foreach ($data as $elem) {
-            DB::update(
-                "update users set name_id = ?, surname_id = ?, district_id = ?,
-                street_id = ?, house_id = ? where id = ?",
-                [$elem->name_id, $elem->surname_id, $elem->district_id,
-                $elem->street_id, $elem->house_id, Auth::id()]
-            );
+        $user = DB::select('select id from users where email = ?', [Redis::get('email')]);
+
+        foreach($user as $user_id) {
+            DB::insert('insert into districts (district, user_id) values (?, ?)', [strip_tags($request->district), $user_id->id]);
+            DB::insert('insert into streets (street, user_id) values (?, ?)', [strip_tags($request->street), $user_id->id]);
+            DB::insert('insert into houses (house, user_id) values (?, ?)', [strip_tags($request->house), $user_id->id]);
+            DB::insert('insert into names (name, user_id) values (?, ?)', [Redis::get('name'), $user_id->id]);
+            DB::insert('insert into surnames (surname, user_id) values (?, ?)', [Redis::get('surname'), $user_id->id]);
+            
+            $districts = DB::select('select id from districts where user_id = ?', [$user_id->id]);
+            foreach ($districts as $elem) {
+                DB::update('update users set district_id = ? where id = ?', [$elem->id, $user_id->id]);
+            }
+
+            $streets = DB::select('select id from streets where user_id = ?', [$user_id->id]);
+            foreach ($streets as $elem) {
+                DB::update('update users set street_id = ? where id = ?', [$elem->id, $user_id->id]);
+            }
+
+            $houses = DB::select('select id from houses where user_id = ?', [$user_id->id]);
+            foreach ($houses as $elem) {
+                DB::update('update users set house_id = ? where id = ?', [$elem->id, $user_id->id]);
+            }
+
+            $names = DB::select('select id from names where user_id = ?', [$user_id->id]);
+            foreach ($names as $elem) {
+                DB::update('update users set name_id = ? where id = ?', [$elem->id, $user_id->id]);
+            }
+
+            $surnames = DB::select('select id from surnames where user_id = ?', [$user_id->id]);
+            foreach ($surnames as $elem) {
+                DB::update('update users set surname_id = ? where id = ?', [$elem->id, $user_id->id]);
+            }
+
+            if (Redis::get('photo')) {
+                DB::update('update users set photo = ? where id = ?', [Redis::get('photo'), $user_id->id]);
+            }
         }
+        // Переделать.
+
+        if (Auth::attempt(['email' => Redis::get('email'), 'password' => Redis::get('password')])) {
+
+            $request->session()->regenerate();
+
+            $request->session()->put(['auth' => 1]);
+        }
+
+        Redis::flushdb();
 
         event(new Registered(Auth::user()));
 
