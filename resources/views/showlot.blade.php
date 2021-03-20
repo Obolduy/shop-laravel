@@ -1,29 +1,67 @@
 @section('main_section')
-@foreach($lot as $elem)
-<p><b>{{$elem->lot_name}}</b></p>
-@foreach($picture as $pic)
-<p><img src="{{asset('storage/lots_images/'.$pic->picture)}}" alt="Картинки отсутствуют" width="189" height="255"></p>
-@endforeach
-<p>@php echo nl2br($elem->lot_description) @endphp</p>
-<p>{{$elem->price}}</p>
-<p>{{$elem->count}}</p>
-<p><i>{{$elem->created_at}}</i></p>
-<p><a href="/cart/add/{{$elem->id}}">Добавить в корзину</a></p><br>
-
-<div class="addreview__form">
-    <form method="POST" action="/add_review/{{$elem->id}}">
-        @csrf
-        <div class="lotname__input">Название отзыва:<input type="text" name="title"></div>
-        <div class="lottext__input"><textarea name="text"></textarea></div>
-        <div class="submit__input"><input type="submit" name="submit"></div>
-    </form>
+<div class="lot__page">
+    <div class="show__lot">
+        @foreach($lot as $elem)
+        <div class="lot__name">
+            <b>{{$elem->lot_name}}</b>
+        </div>
+        <div class="picture_img">
+        @foreach($picture as $pic)
+            <a href="{{asset('storage/lots_images/'.$pic->picture)}}"><img src="{{asset('storage/lots_images/'.$pic->picture)}}" alt="Картинки отсутствуют"></a>
+        @endforeach
+        </div>
+        <div class="lot__desc">
+            @php echo nl2br($elem->lot_description) @endphp
+        </div>
+        <div class="lot__price">
+            <b>Цена:</b> {{$elem->price}}₽
+        </div>
+        <div class="lot__count">
+            <b>Осталось:</b> {{$elem->count}} шт.
+        </div>
+        <div class="lot__createdat">
+            <b>Добавлено:</b> <i>{{$elem->created_at}}</i>
+        </div>
+    </div>
+    <div class="lot__addtocart">
+        <a href="/cart/add/{{$elem->id}}">Добавить в корзину</a>
+    </div>
+    <br>
+    <div class="addreview__form">
+        <form method="POST" action="/add_review/{{$elem->id}}">
+            @csrf
+            <div class="lotname__input">
+                <b>Название отзыва:</b> <input type="text" name="title" placeholder="Введите название отзыва">
+            </div>
+            <div class="lottext__input">
+                <textarea name="text" placeholder="Содержание отзыва"></textarea>
+            </div>
+            <div class="submit__input">
+                <input type="submit" name="submit">
+            </div>
+        </form>
+    </div>
+    @endforeach
+    <b>Отзывы:</b>
+    <div class="reviews">
+        @foreach($reviews as $review)
+        <div class="review">
+            <div class="review__name">
+                <div>Заголовок:</div>
+                <b>{{$review->title}}</b>
+            </div>
+            <div class="review__login">
+                Логин: <b><i>{{$review->login}}</b></i>
+            </div>
+            <div class="review__text">
+                {{$review->text}}
+            </div>
+            <div class="review__createdat">
+                <i>{{$review->created_at}}</i>
+            </div>
+        </div>
+        @endforeach
+    </div>
 </div>
-@endforeach
-@foreach($reviews as $review)
-<p><b>{{$review->title}}</b></p>
-<p><b><i>{{$review->login}}</b></i></p>
-<p>{{$review->text}}</p>
-<p><i>{{$review->created_at}}</i></p>
-@endforeach
 @endsection
 @include('layout')

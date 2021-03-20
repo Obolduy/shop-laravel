@@ -4,6 +4,9 @@
         @foreach($categories as $category)
         <li><a href="/catalog/{{ $category->id }}/">{{$category->category}}</a></li>
         @endforeach
+        <div class="showall__cat">
+            <a href="/catalog/all">Открыть весь каталог</a>
+        </div>
     </ul>
 </nav>
 <div class="last-lots">
@@ -13,6 +16,5 @@
     @endforeach
     </ul>
 </div>
-<p><a href="/catalog/all">Открыть весь каталог</a></p>
 @endsection
 @include('layout')

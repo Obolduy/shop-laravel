@@ -63,6 +63,7 @@
     min-height: 100%;
     background-color: rgb(43, 4, 75);
     color: rgb(255, 255, 255);
+    font-family: sans-serif;
   }
   header {
     background-color: rgba(43, 4, 75, 0.7);
@@ -79,11 +80,11 @@
     display: flex;
     position: absolute;
     left: 4%;
-    top: 1.5%;
+    top: 0.9%;
   }
   .cart {
     position: absolute;
-    top: 5px;
+    top: 0.9%;
     left: 80%;
   }
   .login-btn {
@@ -115,6 +116,7 @@
     border: 2px solid rgb(169, 143, 196);
     border-radius: 5px;
     padding: 4px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 27px;
   }
   .last-lots {
@@ -160,10 +162,10 @@
     top: 22px;
   }
   form {
-    color: rgb(235, 177, 17);
+    color: rgb(245, 207, 41);;
     font-family: sans-serif;
   }
-  form > div > input:hover {
+  input:hover, textarea:hover {
     box-shadow: 0 0 10px rgba(235, 177, 17, 1);
   }
   form > div {
@@ -203,4 +205,106 @@
     .main, header, footer {
       max-width: none;
     }
+  }
+  .showall__cat a{
+    color: red;
+  }
+  textarea {
+    width: 48%;
+    height: 200px;
+    resize: none;
+  }
+  .show__lot div {
+    margin-top: 8px;
+  }
+  .lot__page {
+    width: 70%;
+    margin-left: 15%;
+    background-color: rgb(169, 143, 196);
+    border-radius: 5px;
+    padding: 10px;
+    font-size: large;
+  }
+  .picture_img {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  .picture_img img {
+    width: 250px;
+    height: 300px;
+    padding-top: 5px;
+    border-radius: 5px;
+  }
+  .picture_img img:hover {
+    width: 400px;
+    height: 500px;
+  }
+  .lot__name {
+    display: inline-block;
+    color: rgb(245, 207, 41);
+    position: relative;
+    left: 45%;
+    font-weight: 900;
+    font-size: x-large;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .lot__desc {
+    border: 3px solid rgb(255, 255, 255);
+    border-radius: 7px;
+    padding: 5px;
+    margin-top: 5px;
+    text-align: center;
+  }
+  .lot__addtocart {
+    background-color: rgba(43, 4, 75, 0.7);
+    border: 2px solid white;
+    border-radius: 5px;
+    font-weight: 700;
+    font-family: fantasy, sans-serif;
+    font-size: larger;
+    display: inline-block;
+    padding: 3px;
+    margin-top: 2px;
+  }
+  .lot__addtocart a {
+    color: rgb(169, 143, 196);
+  }
+  .lotname__input input {
+    width: 17%;
+  }
+  input {
+    border-radius: 3px;
+  }
+  input:placeholder-shown, textarea:placeholder-shown {
+    padding-left: 2px;
+  }
+  .reviews {
+    border-top: 2px solid white;
+  }
+  .review {
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 3px;
+    margin-top: 5px;
+  }
+  .review div {
+    margin-top: 8px;
+  }
+  .user__info div {
+    margin-top: 5px;
+  }
+  .user__info {
+    margin-bottom: 25px;
+    padding: 5px;
+    color: rgb(245, 207, 41);
+    font-weight: 700;
+    font-size: larger;
+  }
+  .user__info span {
+    color: white;
+  }
+  .user__info img {
+    width: 400px;
   }

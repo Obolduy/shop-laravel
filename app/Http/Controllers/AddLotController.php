@@ -41,11 +41,11 @@ class AddLotController extends Controller
             return view('addlotcomplete');
         }
 
-        DB::insert('insert into lots (lot_name, lot_description, shop_id, category_id, subcategory_id, price, count) 
-            values (?, ?, ?, ?, ?, ?, ?)',
+        DB::insert('insert into lots (lot_name, lot_description, shop_id, category_id, subcategory_id, price, count, showing, created_at, updated_at) 
+            values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                 [strip_tags($request->lot_name), strip_tags($request->lot_description), Auth::user()->shop_id,
                     Redis::get('category_id'), Redis::get('subcategory_id'),
-                        strip_tags($request->price), strip_tags($request->count)]);
+                        strip_tags($request->price), strip_tags($request->count), 1, now(), now()]);
         
         if ($request->hasFile('photo')) {
             $lot = DB::select('select id from lots where lot_name = ? and shop_id = ?',
