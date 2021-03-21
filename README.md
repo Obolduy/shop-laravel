@@ -1,4 +1,4 @@
-<p>This is one of my firsts (Actually second) pet-projects in Laravel:)</p>
+<p>This is one of my firsts (Actually second) pet-projects in Laravel. It tried to kill my pc two times in a row, but it`s still standing:)</p>
 
 # PHP: 7.3;
 # Server: Apache;
