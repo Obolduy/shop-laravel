@@ -31,6 +31,7 @@ class CreateTables extends Migration
             $table->integer('status_id')->nullable();
             $table->integer('ban_id')->nullable();
             $table->dateTime('registration_time');
+            $table->dateTime('updated_at');
             $table->dateTime('email_verified_at')->nullable();
             $table->rememberToken();
         });
@@ -116,6 +117,7 @@ class CreateTables extends Migration
             $table->text('lot_description');
             $table->integer('price');
             $table->integer('count');
+            $table->integer('pic_id');
             $table->integer('lot_rating')->nullable();
             $table->integer('shop_id');
             $table->integer('category_id');
@@ -134,6 +136,25 @@ class CreateTables extends Migration
             $table->integer('lot_id');
             $table->dateTime('created_at');
         });
+
+        Schema::create('country', function (Blueprint $table) {
+            $table->integer('id');
+            $table->string('country_name');
+        });
+
+        Schema::create('region', function (Blueprint $table) {
+            $table->integer('id');
+            $table->integer('country_id');
+            $table->string('region_name');
+        });
+
+        Schema::create('city', function (Blueprint $table) {
+            $table->integer('id');
+            $table->integer('region_id');
+            $table->string('city_name');
+        });
+
+        // List of countries, regions and cities took from internet
     }
 
     /**
