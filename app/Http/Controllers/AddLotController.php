@@ -58,6 +58,10 @@ class AddLotController extends Controller
     
                     DB::insert('insert into lots_pictures (lot_id, picture) values (?, ?)', [$elem->id, $photo]);
                 }
+                $pic = DB::select('select id from lots_pictures where picture = ? limit 1', [$photo]);
+                foreach ($pic as $pic_id) {
+                    DB::update('update lots set pic_id = ? where id = ?', [$pic_id->id, $elem->id]);
+                }
             }
         }
         Redis::del('category_id, subcategory_id');

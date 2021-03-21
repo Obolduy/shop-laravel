@@ -20,9 +20,11 @@ class CartController extends Controller
         } else {
             $lots = DB::table("cart_$user_id")
                     ->join('lots', 'lots.id', '=', "cart_$user_id.lot_id")
-                    ->select("cart_$user_id.*", 'lots.id', 'lots.lot_name', 'lots.price', 'lots.category_id', 'lots.subcategory_id')->get();
+                    ->leftJoin('lots_pictures', 'lots_pictures.id', '=', 'lots.pic_id')
+                    ->select('lots.id', 'lots.lot_name', 'lots.price', 'lots.category_id', 'lots.subcategory_id', 'lots_pictures.picture')
+                    ->get();
 
-            return view('showcart', ['lots' => $lots]);
+                return view('showcart', ['lots' => $lots]);
         }
     }
 

@@ -41,6 +41,7 @@
             </div>
         @endif
         </div>
+        <div class="title"><a href="/">``Magazine``</a></div>
     </header>
     
     <div class="main">
