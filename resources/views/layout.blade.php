@@ -48,7 +48,7 @@
     </div>
     
     <footer>
-        <div class="footer-text">Copyright ne-copyrightera 2021©</div>
+        <div class="footer-text">Copyright ne-copyrightera @php echo date('Y') @endphp©</div>
     </footer>
 </body>
 </html>

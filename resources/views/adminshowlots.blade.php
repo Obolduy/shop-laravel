@@ -1,9 +1,6 @@
 @section('main_section')
 <table>
-    <colgroup>
-      <col span="2" style="background:Khaki">
-      <col style="background-color:rgb(74, 194, 74)">
-    </colgroup>
+
     <tr>
       <th>Название товара</th>
       <th>Цена</th>

@@ -292,8 +292,8 @@
   .review div {
     margin-top: 8px;
   }
-  .user__info div {
-    margin-top: 5px;
+  .show__user {
+    display: flex;
   }
   .user__info {
     margin-bottom: 25px;
@@ -302,9 +302,100 @@
     font-weight: 700;
     font-size: larger;
   }
+  .user__info div {
+    margin-top: 5px;
+  }
   .user__info span {
     color: white;
   }
   .user__info img {
     width: 400px;
+  }
+  .userchange {
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    padding: 4px;
+    border: 3px solid rgb(169, 143, 196);
+    border-radius: 5px;
+    font-size: x-large;
+  }
+  .userchange div {
+    margin-top: 5px;
+  }
+  .userchange div a{
+    color:red;
+    font-size: larger;
+    font-weight: 700;
+  }
+  .userchange div a:hover{
+    color: rgb(235, 177, 17);
+  }
+  .admin__main {
+    position: absolute;
+    left: 42%;
+    top: 35%;
+    padding: 4px;
+    border: 3px solid rgb(169, 143, 196);
+    border-radius: 5px;
+    font-size: xx-large;
+  }
+  .admin__main div a {
+    color: rgb(235, 177, 17);
+  }
+  .admin__main div a:hover {
+    color: red;
+  }
+  .go__to__main a {
+    color: rgb(235, 177, 17);
+    font-size: xx-large;
+  }
+  .go__to__main a:hover {
+    color: red;
+  }
+  table {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 14px;
+    border-radius: 10px;
+    border-spacing: 0;
+    text-align: center;
+  }
+  th {
+  background: rgb(235, 177, 17);
+  color: white;
+  text-shadow: 0 1px 1px #2D2020;
+  padding: 10px 20px;
+  }
+  th, td {
+  border-style: solid;
+  border-width: 0 1px 1px 0;
+  border-color: white;
+  }
+  th:first-child, td:first-child {
+  text-align: left;
+  }
+  th:first-child {
+  border-top-left-radius: 10px;
+  }
+  th:last-child {
+  border-top-right-radius: 10px;
+  border-right: none;
+  }
+  td {
+  padding: 10px 20px;
+  background: rgb(169, 143, 196);
+  }
+  td a {
+    color:rgb(245, 207, 41);
+    font-weight: 800;
+    text-decoration: solid;
+  }
+  tr:last-child td:first-child {
+  border-radius: 0 0 0 10px;
+  }
+  tr:last-child td:last-child {
+  border-radius: 0 0 10px 0;
+  }
+  tr td:last-child {
+  border-right: none;
   }

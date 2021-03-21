@@ -1,11 +1,10 @@
 @section('main_section')
-
-<p><a href="/admin/users">Список пользователей</a></p>
-<p><a href="/admin/shops">Список магазинов</a></p>
-<p><a href="/admin/lots">Список товаров</a></p>
-<p><a href="/admin/reviews">Список отзывов</a></p>
-<p><a href="/">На главную</a></p>
-
+<div class="admin__main">
+    <div><a href="/admin/users">Список пользователей</a></div>
+    <div><a href="/admin/shops">Список магазинов</a></div>
+    <div><a href="/admin/lots">Список товаров</a></div>
+    <div><a href="/admin/reviews">Список отзывов</a></div>
+</div>
+<div class="go__to__main"><a href="/">На главную</a></div>
 @endsection
-
 @include('layout')
